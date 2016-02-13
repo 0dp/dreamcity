@@ -26,8 +26,8 @@ function init() {
  	); 
 	*/
 
-	wp_register_script ( 'js-unique-navn' , plugins_url( '/js/',  __FILE__), array( 'jquery' ), '3.3.5', true );
-	wp_register_style ( 'css-unique-navn' , plugins_url( '/css/',  __FILE__), '' , '3.3.5', 'all' );
+	wp_register_script ( 'js-dreamcity' , plugins_url( '/js/dreamcity.js',  __FILE__), array( 'jquery' ), '1.0.0', true );
+	wp_register_style ( 'css-dreamcity' , plugins_url( '/css/dreamcity.css',  __FILE__), '' , '1.0.0', 'all' );
 	
 
 	wp_enqueue_script( 'js-unique-navn' );
