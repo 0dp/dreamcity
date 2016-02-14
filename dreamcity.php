@@ -12,7 +12,7 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
 
 //init 
-function init() {
+function init_frontend() {
 
 	//scipts og style vi skal bruge
 
@@ -30,11 +30,18 @@ function init() {
 	wp_register_style ( 'css-dreamcity' , plugins_url( '/css/dreamcity.css',  __FILE__), '' , '1.0.0', 'all' );
 	
 
-	wp_enqueue_script( 'js-unique-navn' );
-	wp_enqueue_style( 'css-unique-navn' );
+	wp_enqueue_script( 'js-dreamcity' );
+	wp_enqueue_style( 'css-dreamcity' );
 }
 
-add_action( 'wp_enqueue_scripts', 'init' );
+add_action( 'wp_enqueue_scripts', 'init_frontend' );
+
+
+function init_backend() {
+    wp_register_style( 'bootstrap', plugins_url() . '/vendor/bootstrap/css/bootstrap.min.css', false, '1.0.0' );    
+    wp_enqueue_style( 'bootstrap' );
+}
+add_action( 'admin_enqueue_scripts', 'init_backend' );
 
 
 //Registrer sider i backend ie. menu
