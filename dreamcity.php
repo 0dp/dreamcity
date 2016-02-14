@@ -14,34 +14,24 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 //init 
 function init_frontend() {
 
-	//scipts og style vi skal bruge
+	//scipts og style vi skal bruge paa frontenden
 
- 	/*
- 	wp_register_script( 
- 	$handle, 	//$string
- 	$src, 	 	//$string
- 	$deps,	 	//$array 
- 	$ver, 	 	//$string
- 	$in_footer  //bool
- 	); 
-	*/
+	wp_enqueue_style('css_dreamcity', plugin_dir_url( __FILE__ ) . 'css/dreamcity.css' );
 
-	wp_register_script ( 'js-dreamcity' , plugins_url( '/js/dreamcity.js',  __FILE__), array( 'jquery' ), '1.0.0', true );
-	wp_register_style ( 'css-dreamcity' , plugins_url( '/css/dreamcity.css',  __FILE__), '' , '1.0.0', 'all' );
-	
-
-	wp_enqueue_script( 'js-dreamcity' );
-	wp_enqueue_style( 'css-dreamcity' );
+	wp_enqueue_script( 'js_dreamcity', plugin_dir_url(__FILE__) . 'js/dreamcity.js' );
 }
 
 add_action( 'wp_enqueue_scripts', 'init_frontend' );
 
 
 function init_backend() {
-    wp_register_style( 'bootstrap', plugins_url() . '/vendor/bootstrap/css/bootstrap.min.css', false, '1.0.0' );    
-    wp_enqueue_style( 'bootstrap' );
+    wp_register_style( 'bootstrap_css', plugins_url( '/vendor/bootstrap/css/bootstrap.min.css', __FILE__ ) );
+    wp_enqueue_script( 'bootstrap_js', plugins_url( '/vendor/bootstrap/js/bootstrap.min.js', __FILE__ ) );
+
+    wp_enqueue_style( 'bootstrap_css' );
 }
-add_action( 'admin_enqueue_scripts', 'init_backend' );
+
+add_action( 'admin_init', 'init_backend' ); 
 
 
 //Registrer sider i backend ie. menu
