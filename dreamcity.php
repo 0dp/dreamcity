@@ -10,6 +10,8 @@ License:     GPL-3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 */
 
+//Includes
+include( plugin_dir_path( __FILE__ ) . 'signup/signup.php');
 
 //init 
 function init_frontend() {
