@@ -66,5 +66,4 @@ function dc_registration_form_fields() {
 	<?php
 	return ob_get_clean();
 }
-
 ?>
