@@ -8,7 +8,7 @@ function dc_registration_form_fields() {
  
 		<?php 
 		// show any error messages after form submission
-		dc_show_error_messages(); ?>
+		//dc_show_error_messages(); ?>
  
 		<form id="dc_registration_form" class="dc_form" action="" method="POST">
 			<fieldset>
@@ -45,5 +45,4 @@ function dc_registration_form_fields() {
 	<?php
 	return ob_get_clean();
 }
-
 ?>
