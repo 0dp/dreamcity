@@ -15,6 +15,7 @@ function dc_registration_form() {
 		// only show the registration form if allowed
 		if($registration_enabled) {
 			$output = dc_registration_form_fields();
+			//$output = "hejk";
 		} else {
 			$output = __('User registration is not enabled');
 		}
@@ -22,6 +23,7 @@ function dc_registration_form() {
 	}
 }
 add_shortcode('register_form', 'dc_registration_form');
+
 
 
 
