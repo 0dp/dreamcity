@@ -12,6 +12,8 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
 //Includes
 include( plugin_dir_path( __FILE__ ) . 'signup/signup.php');
+include( plugin_dir_path( __FILE__ ) . 'vendor/new-user-approve/new-user-approve.php');
+
 
 
 // TODO: CREATE AND SETUP DATABASE TABLES
@@ -107,14 +109,14 @@ function dc_admin_reg() {
     Default value: ''
     */
 
-    add_submenu_page(
-        'dreamcity/admin/admin-dashboard.php',
-        'Pending Dreamers',
-        'Pending Dreamers',
-        'manage_options',
-        'dreamcity/admin/pending.php',
-        '' 
-    );
+    // add_submenu_page(
+    //     'dreamcity/admin/admin-dashboard.php',
+    //     'Pending Dreamers',
+    //     'Pending Dreamers',
+    //     'manage_options',
+    //     'dreamcity/admin/pending.php',
+    //     '' 
+    // );
 
 }
  
