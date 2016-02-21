@@ -21,6 +21,10 @@ function dc_registration_form() {
 		}
 		return $output;
 	}
+
+	else {
+		echo 'show login then registration';
+	}
 }
 add_shortcode('register_form', 'dc_registration_form');
 
