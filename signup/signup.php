@@ -1,6 +1,7 @@
 <?php
 
 include( plugin_dir_path( __FILE__ ) . 'form.php');
+include( plugin_dir_path( __FILE__ ) . 'processing.php');
 // user registration login form
 function dc_registration_form() {
  

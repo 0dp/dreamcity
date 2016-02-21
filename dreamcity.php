@@ -13,6 +13,9 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 //Includes
 include( plugin_dir_path( __FILE__ ) . 'signup/signup.php');
 
+
+// TODO: CREATE AND SETUP DATABASE TABLES
+
 //init 
 function init_frontend() {
 
@@ -78,6 +81,41 @@ function dc_admin_reg() {
         plugins_url( 'dreamcity/images/icon.png' ),
         6
     );
+
+    //TODO: PENDING
+    
+
+
+    /*
+    $parent_slug
+    (string) (Required) The slug name for the parent menu (or the file name of a standard WordPress admin page).
+    
+    $page_title
+    (string) (Required) The text to be displayed in the title tags of the page when the menu is selected.
+
+    $menu_title
+    (string) (Required) The text to be used for the menu.
+
+    $capability
+    (string) (Required) The capability required for this menu to be displayed to the user.
+
+    $menu_slug
+    (string) (Required) The slug name to refer to this menu by (should be unique for this menu).
+
+    $function
+    (callable) (Optional) The function to be called to output the content for this page.
+    Default value: ''
+    */
+
+    add_submenu_page(
+        'dreamcity/admin/admin-dashboard.php',
+        'Pending Dreamers',
+        'Pending Dreamers',
+        'manage_options',
+        'dreamcity/admin/pending.php',
+        '' 
+    );
+
 }
  
 add_action('admin_menu', 'dc_admin_reg');
