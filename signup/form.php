@@ -5,7 +5,9 @@ function dc_registration_form_fields() {
  
 	ob_start(); ?>	
 		<h3 class="dc_header"><?php _e('Register New Account'); ?></h3>
-		<p>Only one person from your camp should sign up. You will be the contact!
+		<p>Only one person from your camp should sign up. You will be the contact person!<br/>
+			You receive a confirmation on email that we have received you application at which point we will evalutate it.<br/>
+			If your project is confirmed you will receive login credentials for the website.
  
 		<?php 
 		// show any error messages after form submission
@@ -47,12 +49,12 @@ function dc_registration_form_fields() {
 					<textarea rows="3" name="dc_user_project_construction" id="dc_user_project_construction" class="form-control" placeholder="Contruction Plans" type="text"></textarea>
 				</p>
 				<p>
-					<label for="password"><?php _e('Password'); ?></label>
-					<input name="dc_user_pass" id="password" class="form-control required" type="password"/>
+					<label for="password">'Password'</label>
+					<input name="dc_user_pass" id="password" class="form-control required" placeholder="Password" type="password"/>
 				</p>
 				<p>
 					<label for="password_again"><?php _e('Password Again'); ?></label>
-					<input name="dc_user_pass_confirm" id="password_again" class="form-control required" type="password"/>
+					<input name="dc_user_pass_confirm" id="password_again" class="form-control placeholder="Password Again" required" type="password"/>
 				</p>
 				
 				<p class="no-pad">

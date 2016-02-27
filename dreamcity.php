@@ -121,3 +121,11 @@ function dc_admin_reg() {
 }
  
 add_action('admin_menu', 'dc_admin_reg');
+
+
+// CREATE USER ROLE ON PLUGIN ACTIVATION
+
+   function add_roles_on_plugin_activation() {
+       add_role( 'custom_role', 'Dreamer', array( 'read' => true, 'level_0' => true ) );
+   }
+   register_activation_hook( __FILE__, 'add_roles_on_plugin_activation' );
