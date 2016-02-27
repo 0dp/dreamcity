@@ -33,7 +33,7 @@ add_action( 'wp_enqueue_scripts', 'init_frontend' );
 
 function init_backend() {
     wp_register_style( 'bootstrap_css', plugins_url( '/vendor/bootstrap/css/bootstrap.min.css', __FILE__ ) );
-    wp_enqueue_script( 'bootstrap_js', plugins_url( '/vendor/bootstrap/js/bootstrap.min.js', array( 'jquery' ), __FILE__ ) );
+    wp_enqueue_script( 'bootstrap_js', plugins_url( '/vendor/bootstrap/js/bootstrap.min.js', __FILE__ ), array( 'jquery' ) );
 
     wp_enqueue_style( 'bootstrap_css' );
 }
@@ -84,48 +84,36 @@ function dc_admin_reg() {
         6
     );
 
-    //TODO: PENDING
-    
-
-
-    /*
-    $parent_slug
-    (string) (Required) The slug name for the parent menu (or the file name of a standard WordPress admin page).
-    
-    $page_title
-    (string) (Required) The text to be displayed in the title tags of the page when the menu is selected.
-
-    $menu_title
-    (string) (Required) The text to be used for the menu.
-
-    $capability
-    (string) (Required) The capability required for this menu to be displayed to the user.
-
-    $menu_slug
-    (string) (Required) The slug name to refer to this menu by (should be unique for this menu).
-
-    $function
-    (callable) (Optional) The function to be called to output the content for this page.
-    Default value: ''
-    */
-
-    // add_submenu_page(
-    //     'dreamcity/admin/admin-dashboard.php',
-    //     'Pending Dreamers',
-    //     'Pending Dreamers',
-    //     'manage_options',
-    //     'dreamcity/admin/pending.php',
-    //     '' 
-    // );
-
 }
  
 add_action('admin_menu', 'dc_admin_reg');
 
 
 // CREATE USER ROLE ON PLUGIN ACTIVATION
+// CURRENTLY TO WORK ADD do_action( 'dc_alert_hook' ); TO PAGE TEMPLATE FILE
 
    function add_roles_on_plugin_activation() {
-       add_role( 'custom_role', 'Dreamer', array( 'read' => true, 'level_0' => true ) );
+       add_role( 'dreamer', 'Dreamer', array( 'read' => true, 'level_0' => true ) );
    }
    register_activation_hook( __FILE__, 'add_roles_on_plugin_activation' );
+
+
+//ADD ALERTS TO PAGES
+
+function dc_alert() {
+
+    //CHECK STATE
+    if ( isset( $_GET['state'] ) ) {
+        $state = $_GET['state'];
+        //IF SUCCESS
+        if ($state == 'success') { 
+            echo '<div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Success!</strong> You have now applied for Dreamcity 2016</div>';
+            }
+    }
+
+    else {}
+}
+
+add_filter( 'dc_alert_hook', 'dc_alert' );

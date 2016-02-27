@@ -1,7 +1,14 @@
 <?php
 
 include( plugin_dir_path( __FILE__ ) . 'form.php');
-include( plugin_dir_path( __FILE__ ) . 'processing.php');
+
+//
+// FORM PROCESSING EXCLUDED POST NOT WORKING TODO!!!!!!
+//
+
+//include( plugin_dir_path( __FILE__ ) . 'processing.php');
+
+
 // user registration login form
 function dc_registration_form() {
  
