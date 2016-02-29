@@ -7,7 +7,7 @@
 
 class pw_new_user_approve_admin_approve {
 
-	var $_admin_page = 'new-user-approve-admin';
+	var $_admin_page = 'dreamcity/vendor/new-user-approve/admin/templates/approve.php';
 
 	/**
 	 * The only instance of pw_new_user_approve_admin_approve.
@@ -62,9 +62,9 @@ class pw_new_user_approve_admin_approve {
 	/**
 	 * Create the view for the admin interface
 	 */
-	// public function approve_admin() {
-	// 	require_once( pw_new_user_approve()->get_plugin_dir() . '/admin/templates/approve.php' );
-	// }
+	public function approve_admin() {
+		require_once( pw_new_user_approve()->get_plugin_dir() . 'dreamcity/vendor/new-user-approve/admin/templates/approve.php' );
+	}
 
 	/**
 	 * Output the table that shows the registered users grouped by status
@@ -104,13 +104,13 @@ class pw_new_user_approve_admin_approve {
 					$avatar = get_avatar( $user->user_email, 32 );
 
 					if ( $approve ) {
-						$approve_link = get_option( 'siteurl' ) . '/wp-admin/users.php?page=' . $this->_admin_page . '&user=' . $user->ID . '&status=approve';
+						$approve_link = get_option( 'siteurl' ) . '/wp-admin/admin.php?page=' . $this->_admin_page . '&user=' . $user->ID . '&status=approve';
 						if ( isset( $_REQUEST['tab'] ) )
 							$approve_link = add_query_arg( array( 'tab' => esc_attr( $_REQUEST['tab'] ) ), $approve_link );
 						$approve_link = wp_nonce_url( $approve_link, 'pw_new_user_approve_action_' . get_class( $this ) );
 					}
 					if ( $deny ) {
-						$deny_link = get_option( 'siteurl' ) . '/wp-admin/users.php?page=' . $this->_admin_page . '&user=' . $user->ID . '&status=deny';
+						$deny_link = get_option( 'siteurl' ) . '/wp-admin/admin.php?page=' . $this->_admin_page . '&user=' . $user->ID . '&status=deny';
 						if ( isset( $_REQUEST['tab'] ) )
 							$deny_link = add_query_arg( 'tab', esc_attr( $_REQUEST['tab'] ), $deny_link );
 						$deny_link = wp_nonce_url( $deny_link, 'pw_new_user_approve_action_' . get_class( $this ) );
@@ -200,7 +200,7 @@ class pw_new_user_approve_admin_approve {
 			// Check that the user hasn't already clicked to ignore the message
 			if ( !get_user_meta( $user_id, 'pw_new_user_approve_ignore_notice' ) ) {
 				echo '<div class="updated"><p>';
-				printf( __( 'You can now update user status on the <a href="%1$s">users admin page</a>. | <a href="%2$s">Hide Notice</a>', 'new-user-approve' ), admin_url( 'users.php' ), add_query_arg( array( 'new-user-approve-ignore-notice' => 1 ) ) );
+				printf( __( 'You can now update user status on the <a href="%1$s">users admin page</a>. | <a href="%2$s">Hide Notice</a>', 'new-user-approve' ), admin_url( 'dreamcity/vendor/new-user-approve/admin/templates/approve.php' ), add_query_arg( array( 'new-user-approve-ignore-notice' => 1 ) ) );
 				echo "</p></div>";
 			}
 		}
@@ -231,11 +231,11 @@ class pw_new_user_approve_admin_approve {
 		$active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'pending_users';
 ?>
 		<h3 class="nav-tab-wrapper" style="padding-bottom: 0; border-bottom: none;">
-			<a href="<?php echo esc_url( admin_url( 'users.php?page=new-user-approve-admin&tab=pending_users' ) ); ?>"
+			<a href="<?php echo esc_url( admin_url( 'admin.php?page=dreamcity/vendor/new-user-approve/admin/templates/approve.php&tab=pending_users' ) ); ?>"
 				class="nav-tab<?php echo $active_tab == 'pending_users' ? ' nav-tab-active' : ''; ?>"><span><?php _e( 'Dreamers Pending Approval', 'new-user-approve' ); ?></span></a>
-			<a href="<?php echo esc_url( admin_url( 'users.php?page=new-user-approve-admin&tab=approved_users' ) ); ?>"
+			<a href="<?php echo esc_url( admin_url( 'admin.php?page=dreamcity/vendor/new-user-approve/admin/templates/approve.php&tab=approved_users' ) ); ?>"
 			   class="nav-tab<?php echo $active_tab == 'approved_users' ? ' nav-tab-active' : ''; ?>"><span><?php _e( 'Approved Dreamers', 'new-user-approve' ); ?></span></a>
-			<a href="<?php echo esc_url( admin_url( 'users.php?page=new-user-approve-admin&tab=denied_users' ) ); ?>"
+			<a href="<?php echo esc_url( admin_url( 'admin.php?page=dreamcity/vendor/new-user-approve/admin/templates/approve.php&tab=denied_users' ) ); ?>"
 			   class="nav-tab<?php echo $active_tab == 'denied_users' ? ' nav-tab-active' : ''; ?>"><span><?php _e( 'Denied Dreamers', 'new-user-approve' ); ?></span></a>
 		</h3>
 

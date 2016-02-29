@@ -3,7 +3,7 @@
 
 <?php
 
-$_SERVER["PHP_SELF"];
+//$_SERVER["PHP_SELF"];
 
 
 if ( isset( $_GET['user'] ) && isset( $_GET['status'] ) ) {
