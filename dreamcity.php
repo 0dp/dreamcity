@@ -14,7 +14,7 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 include( plugin_dir_path( __FILE__ ) . 'signup/signup.php');
 include( plugin_dir_path( __FILE__ ) . 'vendor/new-user-approve/new-user-approve.php');
 
-
+//include( plugin_dir_path( __FILE__ ) . 'install/db_install.php');
 
 // TODO: CREATE AND SETUP DATABASE TABLES
 
@@ -117,3 +117,43 @@ function dc_alert() {
 }
 
 add_filter( 'dc_alert_hook', 'dc_alert' );
+
+add_action('admin_menu', 'dc_admin_reg');
+//add_action( 'plugins_loaded', 'dc_update_db_check' );
+
+
+global $dc_db_version;
+$dc_db_version = '1.0';
+
+
+function dcdb_install () {
+    global $wpdb;
+    global $dc_db_version;
+
+    echo("LARS LARS");
+
+    $table_name = $wpdb->prefix . "dc_camp";
+
+    $charset_collate = $wpdb->get_charset_collate();
+
+    $sql = "CREATE TABLE $table_name (
+        camp_id mediumint(9) NOT NULL AUTO_INCREMENT,
+        user_id int(10) NOT NULL,
+        camp_name text(100) NOT NULL, 
+        camp_description text NOT NULL,
+        camp_url varchar(70) DEFAULT '' NOT NULL,
+        camp_imageURL varchar(55) DEFAULT '' NOT NULL,
+        camp_iconURL varchar(55) DEFAULT '' NOT NULL,
+        camp_residents smallint(9) DEFAULT 0 NOT NULL,
+        camp_notes text DEFAULT NULL,
+        UNIQUE KEY camp_id (camp_id)
+        ) $charset_collate;";
+
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
+
+    add_option( 'dc_db_version', $dc_db_version );
+
+}
+//register_activation_hook( plugin_dir_path( __FILE__ ) . 'install/db_install.php', 'dcdb_install' );
+register_activation_hook( __FILE__, 'dcdb_install' );
