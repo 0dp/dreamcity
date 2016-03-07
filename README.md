@@ -1,6 +1,12 @@
 # DREAMCITY
 dreamcity modul
 
+# git add *
+# git commit -m "message"
+# git push	
+
+# http://rogerdudler.github.io/git-guide/
+
 
 ## WHAT IS DREAMCITY?
 Dream City is an audience-driven community located on campsite H, one of Roskilde Festival's most central camping areas.
