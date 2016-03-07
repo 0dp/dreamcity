@@ -48,17 +48,8 @@ function dc_registration_form_fields() {
 					<label for="dc_user_project_construction"><?php _e('Does your project include any construction work? (If yes, please send a description and drawing/picture to illustrate your concept to bygdc@roskilde-festival.dk)'); ?></label>
 					<textarea rows="3" name="dc_user_project_construction" id="dc_user_project_construction" class="form-control" placeholder="Contruction Plans" type="text"></textarea>
 				</p>
-				<p>
-					<label for="password">'Password'</label>
-					<input name="dc_user_pass" id="password" class="form-control required" placeholder="Password" type="password"/>
-				</p>
-				<p>
-					<label for="password_again"><?php _e('Password Again'); ?></label>
-					<input name="dc_user_pass_confirm" id="password_again" class="form-control placeholder="Password Again" required" type="password"/>
-				</p>
-				
 				<p class="no-pad">
-				<label for="checkbox"><?php _e('On what date do you wish to participate in the mandatory security workshop? (choose at least one)'); ?></label>
+				    <label for="checkbox"><?php _e('On what date do you wish to participate in the mandatory security workshop? (choose at least one)'); ?></label>
 
 				<div class="checkbox">
 					<label>
@@ -96,14 +87,22 @@ function dc_registration_form_fields() {
 }
 
 function dc_add_new_dreamer() {
+    global $wpdb, $new_user_id, $user_login, $user_email, $user_first, $user_last, $camp_phone, $camp_name, $camp_name, $camp_pat_no, $camp_pro_desc, $camp_pro_cons, $camp_workshop;
+
     if (isset( $_POST["dc_user_email"] ) && wp_verify_nonce($_POST['dc_register_nonce'], 'dc-register-nonce')) {
-    $user_login   = $_POST["dc_user_email"];  
-    $user_email   = $_POST["dc_user_email"];
-    $user_first   = $_POST["dc_user_first"];
-    $user_last    = $_POST["dc_user_last"];
-    //$user_pass    = $_POST["dc_user_pass"];
-    //$pass_confirm   = $_POST["dc_user_pass_confirm"];
- 
+    $user_login    = $_POST["dc_user_email"];  
+    $user_email    = $_POST["dc_user_email"];
+    $user_first    = $_POST["dc_user_first"];
+    $user_last     = $_POST["dc_user_last"];
+    $camp_phone    = $_POST["dc_user_phone"];
+    $camp_name     = $_POST["dc_user_camp_name"];
+    $camp_pat_no   = $_POST["dc_user_participants"];
+    $camp_pro_desc = $_POST["dc_user_project_desc"];
+    $camp_pro_cons = $_POST["dc_user_project_construction"];
+    $camp_workshop = $_POST["optionsRadios"];
+
+    //FINISH CHECKS
+
     // this is required for username checks
     // require_once(ABSPATH . WPINC . '/registration.php');
  
@@ -142,7 +141,7 @@ function dc_add_new_dreamer() {
     // only create the user in if there are no errors
     if(empty($errors)) {
  
-      $new_user_id = wp_insert_user(array(
+        $new_user_id = wp_insert_user(array(
           'user_login'    => $user_login,
           //'user_pass'     => $user_pass,
           'user_email'    => $user_email,
@@ -152,7 +151,40 @@ function dc_add_new_dreamer() {
           'role'        => 'dreamer'
         )
       );
-      if($new_user_id) {
+
+        //insert into wp_dc_camp
+        // camp_id mediumint(9) NOT NULL AUTO_INCREMENT,
+        // user_id int(10) NOT NULL,
+        // camp_name text(100) NOT NULL, 
+        // camp_description text NOT NULL,
+        // camp_url varchar(70) DEFAULT '' NOT NULL,
+        // camp_imageURL varchar(100) DEFAULT '' NOT NULL,
+        // camp_iconURL varchar(100) DEFAULT '' NOT NULL,
+        // camp_residents smallint(9) DEFAULT 0 NOT NULL,
+        // camp_notes text DEFAULT NULL,
+        // camp_registration_date datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+        // camp_modified datetime DEFAULT '0000-00-00 00:00:00' NULL,
+        function dc_new_camp() {
+            global $wpdb, $new_user_id, $camp_name, $camp_phone, $camp_pro_desc, $camp_pat_no, $camp_pro_cons;
+            $table_name = $wpdb->prefix . 'dc_camp';
+
+            $wpdb->insert( 
+                $table_name, 
+                array(
+                    'user_id'                => $new_user_id,
+                    'camp_name'              => $camp_name,
+                    'camp_phone'             => $camp_phone,
+                    'camp_description'       => $camp_pro_desc,
+                    'camp_residents'         => $camp_pat_no,
+                    'camp_construction'      => $camp_pro_cons,
+                    'camp_registration_date' => current_time( 'mysql' ), 
+                ) 
+            );
+
+print_r($new_user_id);
+        }
+        dc_new_camp();
+    if($new_user_id) {
         // send an email to the admin alerting them of the registration
         wp_new_user_notification($new_user_id);
  
@@ -162,7 +194,7 @@ function dc_add_new_dreamer() {
         //do_action('wp_login', $user_login);
  
         // send the newly created user to the home page after logging them in and add a confirmation message
-        wp_redirect(home_url() . '?state=success'); exit;
+        //wp_redirect(home_url() . '?state=success'); exit;
       }
  
     }

@@ -18,6 +18,47 @@ include( plugin_dir_path( __FILE__ ) . 'vendor/new-user-approve/new-user-approve
 
 // TODO: CREATE AND SETUP DATABASE TABLES
 
+
+global $dc_db_version;
+$dc_db_version = '1.0';
+
+
+function dcdb_install () {
+    global $wpdb;
+    global $dc_db_version;
+
+    //echo("LARS LARS");
+
+    $table_name = $wpdb->prefix . "dc_camp";
+
+    $charset_collate = $wpdb->get_charset_collate();
+
+    $sql = "CREATE TABLE $table_name (
+        camp_id mediumint(9) NOT NULL AUTO_INCREMENT,
+        user_id int(10) NOT NULL,
+        camp_name text(100) NOT NULL, 
+        camp_phone varchar(12) NOT NULL,
+        camp_description text NOT NULL,
+        camp_construction text NULL,
+        camp_url varchar(70) DEFAULT '' NULL,
+        camp_imageURL varchar(100) DEFAULT '' NULL,
+        camp_iconURL varchar(100) DEFAULT '' NULL,
+        camp_residents smallint(9) DEFAULT 0 NOT NULL,
+        camp_notes text DEFAULT NULL,
+        camp_registration_date datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+        camp_modified datetime DEFAULT '0000-00-00 00:00:00' NULL,
+        UNIQUE KEY camp_id (camp_id)
+        ) $charset_collate;";
+
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
+
+    add_option( 'dc_db_version', $dc_db_version );
+
+}
+
+register_activation_hook( __FILE__, 'dcdb_install' );
+
 //init 
 function init_frontend() {
 
