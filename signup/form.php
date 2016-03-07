@@ -181,7 +181,7 @@ function dc_add_new_dreamer() {
                 ) 
             );
 
-print_r($new_user_id);
+//print_r($new_user_id);
         }
         dc_new_camp();
     if($new_user_id) {
@@ -194,7 +194,7 @@ print_r($new_user_id);
         //do_action('wp_login', $user_login);
  
         // send the newly created user to the home page after logging them in and add a confirmation message
-        //wp_redirect(home_url() . '?state=success'); exit;
+        wp_redirect(home_url() . '?state=success'); exit;
       }
  
     }
