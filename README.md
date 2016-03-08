@@ -1,11 +1,8 @@
 # DREAMCITY
-dreamcity modul
 
-# git add *
-# git commit -m "message"
-# git push	
+## dreamcity modul
 
-# http://rogerdudler.github.io/git-guide/
+
 
 
 ## WHAT IS DREAMCITY?
