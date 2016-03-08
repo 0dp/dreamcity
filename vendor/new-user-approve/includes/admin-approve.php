@@ -78,8 +78,8 @@ class pw_new_user_approve_admin_approve {
 		$deny = ( 'approved' == $status || 'pending' == $status );
 
 		$user_status = pw_new_user_approve()->get_user_statuses();
-		$users = $user_status[$status];
-
+		$users = $user_status[$status];				
+		
 		if ( count( $users ) > 0 ) {
 			?>
 			<table class="widefat">
@@ -95,60 +95,63 @@ class pw_new_user_approve_admin_approve {
 					<?php } ?>
 				</tr>
 				</thead>
-				<tbody>
+				<tbody>	
 				<?php
 				// show each of the users
 				$row = 1;
-				foreach ( $users as $user ) {
-					$class = ( $row % 2 ) ? '' : ' class="alternate"';
-					$avatar = get_avatar( $user->user_email, 32 );
+				foreach ( $users as $user ) {									
+					if( user_can($user, 'dreamer') )
+					{						
+						$class = ( $row % 2 ) ? '' : ' class="alternate"';
+						$avatar = get_avatar( $user->user_email, 32 );
 
-					if ( $approve ) {
-						$approve_link = get_option( 'siteurl' ) . '/wp-admin/admin.php?page=' . $this->_admin_page . '&user=' . $user->ID . '&status=approve';
-						if ( isset( $_REQUEST['tab'] ) )
-							$approve_link = add_query_arg( array( 'tab' => esc_attr( $_REQUEST['tab'] ) ), $approve_link );
-						$approve_link = wp_nonce_url( $approve_link, 'pw_new_user_approve_action_' . get_class( $this ) );
-					}
-					if ( $deny ) {
-						$deny_link = get_option( 'siteurl' ) . '/wp-admin/admin.php?page=' . $this->_admin_page . '&user=' . $user->ID . '&status=deny';
-						if ( isset( $_REQUEST['tab'] ) )
-							$deny_link = add_query_arg( 'tab', esc_attr( $_REQUEST['tab'] ), $deny_link );
-						$deny_link = wp_nonce_url( $deny_link, 'pw_new_user_approve_action_' . get_class( $this ) );
-					}
-
-					if ( current_user_can( 'edit_user', $user->ID ) ) {
-						if ( $current_user->ID == $user->ID ) {
-							$edit_link = 'profile.php';
-						} else {
-							$edit_link = add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER['REQUEST_URI'] ) ) ), "user-edit.php?user_id=$user->ID" );
+						if ( $approve ) {
+							$approve_link = get_option( 'siteurl' ) . '/wp-admin/admin.php?page=' . $this->_admin_page . '&user=' . $user->ID . '&status=approve';
+							if ( isset( $_REQUEST['tab'] ) )
+								$approve_link = add_query_arg( array( 'tab' => esc_attr( $_REQUEST['tab'] ) ), $approve_link );
+							$approve_link = wp_nonce_url( $approve_link, 'pw_new_user_approve_action_' . get_class( $this ) );
 						}
-						$edit = '<strong><a href="' . esc_url( $edit_link ) . '">' . esc_html( $user->user_login ) . '</a></strong>';
-					} else {
-						$edit = '<strong>' . esc_html( $user->user_login ) . '</strong>';
-					}
+						if ( $deny ) {
+							$deny_link = get_option( 'siteurl' ) . '/wp-admin/admin.php?page=' . $this->_admin_page . '&user=' . $user->ID . '&status=deny';
+							if ( isset( $_REQUEST['tab'] ) )
+								$deny_link = add_query_arg( 'tab', esc_attr( $_REQUEST['tab'] ), $deny_link );
+							$deny_link = wp_nonce_url( $deny_link, 'pw_new_user_approve_action_' . get_class( $this ) );
+						}
 
-					?>
-					<tr <?php echo $class; ?>>
-					<td><?php echo $avatar . ' ' . $edit; ?></td>
-					<td><?php echo get_user_meta( $user->ID, 'first_name', true ) . ' ' . get_user_meta( $user->ID, 'last_name', true ); ?></td>
-					<td><a href="mailto:<?php echo $user->user_email; ?>"
-						   title="<?php _e( 'email:', 'new-user-approve' ) ?> <?php echo $user->user_email; ?>"><?php echo $user->user_email; ?></a>
-					</td>
-					<?php if ( $approve && $user->ID != get_current_user_id() ) { ?>
-						<td align="center"><a href="<?php echo esc_url( $approve_link ); ?>"
-											  title="<?php _e( 'Approve', 'new-user-approve' ); ?> <?php echo $user->user_login; ?>"><?php _e( 'Approve', 'new-user-approve' ); ?></a>
+						if ( current_user_can( 'edit_user', $user->ID ) ) {
+							if ( $current_user->ID == $user->ID ) {
+								$edit_link = 'profile.php';
+							} else {
+								$edit_link = add_query_arg( 'wp_http_referer', urlencode( esc_url( stripslashes( $_SERVER['REQUEST_URI'] ) ) ), "user-edit.php?user_id=$user->ID" );
+							}
+							$edit = '<strong><a href="' . esc_url( $edit_link ) . '">' . esc_html( $user->user_login ) . '</a></strong>';
+						} else {
+							$edit = '<strong>' . esc_html( $user->user_login ) . '</strong>';
+						}
+
+						?>
+						<tr <?php echo $class; ?>>
+						<td><?php echo $avatar . ' ' . $edit; ?></td>
+						<td><?php echo get_user_meta( $user->ID, 'first_name', true ) . ' ' . get_user_meta( $user->ID, 'last_name', true ); ?></td>
+						<td><a href="mailto:<?php echo $user->user_email; ?>"
+							   title="<?php _e( 'email:', 'new-user-approve' ) ?> <?php echo $user->user_email; ?>"><?php echo $user->user_email; ?></a>
 						</td>
-					<?php } ?>
-					<?php if ( $deny && $user->ID != get_current_user_id() ) { ?>
-						<td align="center"><a href="<?php echo esc_url( $deny_link ); ?>"
-											  title="<?php _e( 'Deny', 'new-user-approve' ); ?> <?php echo $user->user_login; ?>"><?php _e( 'Deny', 'new-user-approve' ); ?></a>
-						</td>
-					<?php } ?>
-					<?php if ( $user->ID == get_current_user_id() ) : ?>
-						<td colspan="2">&nbsp;</td>
-					<?php endif; ?>
-					</tr><?php
-					$row++;
+						<?php if ( $approve && $user->ID != get_current_user_id() ) { ?>
+							<td align="center"><a href="<?php echo esc_url( $approve_link ); ?>"
+												  title="<?php _e( 'Approve', 'new-user-approve' ); ?> <?php echo $user->user_login; ?>"><?php _e( 'Approve', 'new-user-approve' ); ?></a>
+							</td>
+						<?php } ?>
+						<?php if ( $deny && $user->ID != get_current_user_id() ) { ?>
+							<td align="center"><a href="<?php echo esc_url( $deny_link ); ?>"
+												  title="<?php _e( 'Deny', 'new-user-approve' ); ?> <?php echo $user->user_login; ?>"><?php _e( 'Deny', 'new-user-approve' ); ?></a>
+							</td>
+						<?php } ?>
+						<?php if ( $user->ID == get_current_user_id() ) : ?>
+							<td colspan="2">&nbsp;</td>
+						<?php endif; ?>
+						</tr><?php
+						$row++;
+					}
 				}
 				?>
 				</tbody>
