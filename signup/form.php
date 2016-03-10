@@ -4,7 +4,7 @@
 function dc_registration_form_fields() {
  
 	ob_start(); ?>	
-		<h3 class="dc_header"><?php _e('Register New Account'); ?></h3>
+		<h3 class="dc_header"><?php _e('New Dreamer Registration'); ?></h3>
 		<p>Only one person from your camp should sign up. You will be the contact person!<br/>
 			You'll receive a confirmation on email that we have received you application at which point we will evalutate it.<br/>
 			If your project is confirmed you will receive login credentials for the website.
@@ -47,9 +47,22 @@ function dc_registration_form_fields() {
 					<!-- Should we not have file submission here and/or have it sent to byg_dc? -->
 
                 <p>
+                <label for="dc_camp_logo">
+                    <?php _e('Camp Logo - Please upload your camps logo. 300x300px preferably, png or jpg, max file size is 500kb'); ?>
+                </label>
+
                 <input type="file" name="dc_camp_logo" id="dc_camp_logo"  multiple="false" />
                 <input type="hidden" name="post_id" id="post_id" value="55" />
                 <?php wp_nonce_field( 'dc_camp_logo', 'dc_camp_logo_nonce' ); ?>
+                </p>
+
+                <label for="dc_camp_img">
+                    <?php _e('Camp Image - Please upload your camps Image. png or jpg, max file size is 500kb'); ?>
+                </label>
+
+                <input type="file" name="dc_camp_img" id="dc_camp_img"  multiple="false" />
+                <input type="hidden" name="post_id" id="post_id" value="55" />
+                <?php wp_nonce_field( 'dc_camp_img', 'dc_camp_img_nonce' ); ?>
                 </p>
                     
 
