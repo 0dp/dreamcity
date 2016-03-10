@@ -13,7 +13,7 @@ function dc_registration_form_fields() {
 		// show any error messages after form submission
 		//dc_show_error_messages(); ?>
  
-		<form id="dc_registration_form" class="dc_form" action="" method="POST">
+		<form id="dc_registration_form" class="dc_form" action="" method="POST" enctype="multipart/form-data">
 			<fieldset>
 				<p>
 					<label for="dc_user_email"><?php _e('Email'); ?></label>
@@ -47,12 +47,13 @@ function dc_registration_form_fields() {
 					<!-- Should we not have file submission here and/or have it sent to byg_dc? -->
 
                 <p>
-                
                 <input type="file" name="dc_camp_logo" id="dc_camp_logo"  multiple="false" />
                 <input type="hidden" name="post_id" id="post_id" value="55" />
                 <?php wp_nonce_field( 'dc_camp_logo', 'dc_camp_logo_nonce' ); ?>
                 </p>
                     
+
+
 					<label for="dc_user_project_construction"><?php _e('Does your project include any construction work? (If yes, please send a description and drawing/picture to illustrate your concept to bygdc@roskilde-festival.dk)'); ?></label>
 					<textarea rows="3" name="dc_user_project_construction" id="dc_user_project_construction" class="form-control" placeholder="Contruction Plans" type="text"></textarea>
 				</p>
@@ -67,19 +68,19 @@ function dc_registration_form_fields() {
 				</div>
 				<div class="checkbox">
 				 	<label>
-				    	<input type="checkbox" name="optionsRadios" id="optionsRadios2" value="option2" >
+				    	<input type="checkbox" name="optionsRadios" id="optionsRadios2" value="Wednesday 30. March" >
 						Wednesday 30. March @ 17.00-20-00
 					</label>
 				</div>	
 				<div class="checkbox">
 				 	<label>
-				    	<input type="checkbox" name="optionsRadios" id="optionsRadios3" value="option3" >
+				    	<input type="checkbox" name="optionsRadios" id="optionsRadios3" value="Sunday 3. April" >
 						Sunday 3. April @ 13.00-17.00
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
-				    	<input type="checkbox" name="optionsRadios" id="optionsRadios4" value="option4" >
+				    	<input type="checkbox" name="optionsRadios" id="optionsRadios4" value="Sunday 10. April" >
 						Sunday 10. April @ 13.00-17.00
 					</label>
 				</div>
@@ -95,7 +96,8 @@ function dc_registration_form_fields() {
 }
 
 function dc_add_new_dreamer() {
-    global $wpdb, $new_user_id, $user_login, $user_email, $user_first, $user_last, $camp_phone, $camp_name, $camp_name, $camp_pat_no, $camp_pro_desc, $camp_pro_cons, $camp_workshop;
+    global $wpdb, $new_user_id, $user_login, $user_email, $user_first, $user_last, $camp_phone, $camp_name, $camp_name, $camp_pat_no, $camp_pro_desc, $camp_pro_cons, $camp_workshop, $newupload;
+
 
     if (isset( $_POST["dc_user_email"] ) && wp_verify_nonce($_POST['dc_register_nonce'], 'dc-register-nonce')) {
     $user_login    = $_POST["dc_user_email"];  
@@ -151,29 +153,9 @@ function dc_add_new_dreamer() {
           'role'        => 'dreamer'
         )
       );
-// Check that the nonce is valid, and the user can edit this post.
-    if ( isset( $_POST['dc_logo_upload_nonce'] ) && wp_verify_nonce( $_POST['dc_camp_logo_nonce'], 'dc_camp_logo' ) ) {
-        // The nonce was valid it is safe to continue.
 
-        // These files need to be included as dependencies when on the front end.
-        require_once( ABSPATH . 'wp-admin/includes/image.php' );
-        require_once( ABSPATH . 'wp-admin/includes/file.php' );
-        require_once( ABSPATH . 'wp-admin/includes/media.php' );
-        
-        // Let WordPress handle the upload.
-        // Remember, 'my_image_upload' is the name of our file input in our form above.
-        $attachment_id = media_handle_upload( 'dc_camp_logo', '0' );
-        
-        if ( is_wp_error( $attachment_id ) ) {
-            // There was an error uploading the image.
-        } else {
-            // The image was uploaded successfully!
-        }
 
-    } else {
 
-        // The security check failed, maybe show the user an error.
-    }
         //insert into wp_dc_camp
         // camp_id mediumint(9) NOT NULL AUTO_INCREMENT,
         // user_id int(10) NOT NULL,
@@ -187,7 +169,7 @@ function dc_add_new_dreamer() {
         // camp_registration_date datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
         // camp_modified datetime DEFAULT '0000-00-00 00:00:00' NULL,
         function dc_new_camp() {
-            global $wpdb, $new_user_id, $camp_name, $camp_phone, $camp_pro_desc, $camp_pat_no, $camp_pro_cons,$camp_workshop;
+            global $wpdb, $new_user_id, $camp_name, $camp_phone, $camp_pro_desc, $camp_pat_no, $camp_pro_cons,$camp_workshop, $attach_id;
             $table_name = $wpdb->prefix . 'dc_camp';
 
             $wpdb->insert( 
@@ -199,10 +181,31 @@ function dc_add_new_dreamer() {
                     'camp_description'       => $camp_pro_desc,
                     'camp_residents'         => $camp_pat_no,
                     'camp_construction'      => $camp_pro_cons,
-                    'camp_iconURL'           => '',
+                    'camp_iconURL'           => $attach_id,
                     'camp_registration_date' => current_time( 'mysql' ), 
                 ) 
             );
+
+
+    if (!function_exists('wp_generate_attachment_metadata')){
+            require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+            require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+            require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+        }
+         if ($_FILES) {
+            foreach ($_FILES as $file => $array) {
+            $mime = $_FILES[$file]['type'];
+            $filesize = $_FILES[$file]['size'];
+            $maxsizef = 524288;
+            if($filesize > $maxsizef) $error_array[] = 'error size, max file size = 500 KB';
+            if(($mime != 'image/jpeg') && ($mime != 'image/jpg') && ($mime != 'image/png')) $error_array[] ='error type , please upload: jpg, jpeg, png';
+                $attach_id = media_handle_upload( $file, $new_user_id );
+            }   
+        }
+        if ($attach_id > 0){
+            //and if you want to set that image as Post  then use:
+            update_post_meta($new_user_id,'_thumbnail_id',$attach_id);
+        }
 
 //SKAL MAN PAKKE META CONTENT I ET ARRAY OG LOOPE DET IGENNEM EN QUERY?????
 
