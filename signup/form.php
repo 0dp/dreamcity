@@ -96,7 +96,7 @@ function dc_registration_form_fields() {
 }
 
 function dc_add_new_dreamer() {
-    global $wpdb, $new_user_id, $user_login, $user_email, $user_first, $user_last, $camp_phone, $camp_name, $camp_name, $camp_pat_no, $camp_pro_desc, $camp_pro_cons, $camp_workshop, $newupload;
+    global $wpdb, $new_user_id, $user_login, $user_email, $user_first, $user_last, $camp_phone, $camp_name, $camp_name, $camp_pat_no, $camp_pro_desc, $camp_pro_cons, $camp_workshop, $newupload,$campICO_url;
 
 
     if (isset( $_POST["dc_user_email"] ) && wp_verify_nonce($_POST['dc_register_nonce'], 'dc-register-nonce')) {
@@ -154,7 +154,26 @@ function dc_add_new_dreamer() {
         )
       );
 
-
+    if (!function_exists('wp_generate_attachment_metadata')){
+            require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+            require_once(ABSPATH . "wp-admin" . '/includes/file.php');
+            require_once(ABSPATH . "wp-admin" . '/includes/media.php');
+        }
+         if ($_FILES) {
+            foreach ($_FILES as $file => $array) {
+            $mime = $_FILES[$file]['type'];
+            $filesize = $_FILES[$file]['size'];
+            $maxsizef = 524288;
+            if($filesize > $maxsizef) $error_array[] = 'error size, max file size = 500 KB';
+            if(($mime != 'image/jpeg') && ($mime != 'image/jpg') && ($mime != 'image/png')) $error_array[] ='error type , please upload: jpg, jpeg, png';
+                $attach_id = media_handle_upload( $file, $new_user_id );
+                $campICO_url = wp_get_attachment_url($attach_id);
+            }   
+        }
+        // if ($attach_id > 0){
+        //     //and if you want to set that image as Post  then use:
+        //     update_post_meta($new_user_id,'_thumbnail_id',$attach_id);
+        // }
 
         //insert into wp_dc_camp
         // camp_id mediumint(9) NOT NULL AUTO_INCREMENT,
@@ -169,7 +188,7 @@ function dc_add_new_dreamer() {
         // camp_registration_date datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
         // camp_modified datetime DEFAULT '0000-00-00 00:00:00' NULL,
         function dc_new_camp() {
-            global $wpdb, $new_user_id, $camp_name, $camp_phone, $camp_pro_desc, $camp_pat_no, $camp_pro_cons,$camp_workshop, $attach_id;
+            global $wpdb, $new_user_id, $camp_name, $camp_phone, $camp_pro_desc, $camp_pat_no, $camp_pro_cons,$camp_workshop, $campICO_url;
             $table_name = $wpdb->prefix . 'dc_camp';
 
             $wpdb->insert( 
@@ -181,31 +200,13 @@ function dc_add_new_dreamer() {
                     'camp_description'       => $camp_pro_desc,
                     'camp_residents'         => $camp_pat_no,
                     'camp_construction'      => $camp_pro_cons,
-                    'camp_iconURL'           => $attach_id,
+                    'camp_iconURL'           => $campICO_url,
                     'camp_registration_date' => current_time( 'mysql' ), 
                 ) 
             );
 
 
-    if (!function_exists('wp_generate_attachment_metadata')){
-            require_once(ABSPATH . "wp-admin" . '/includes/image.php');
-            require_once(ABSPATH . "wp-admin" . '/includes/file.php');
-            require_once(ABSPATH . "wp-admin" . '/includes/media.php');
-        }
-         if ($_FILES) {
-            foreach ($_FILES as $file => $array) {
-            $mime = $_FILES[$file]['type'];
-            $filesize = $_FILES[$file]['size'];
-            $maxsizef = 524288;
-            if($filesize > $maxsizef) $error_array[] = 'error size, max file size = 500 KB';
-            if(($mime != 'image/jpeg') && ($mime != 'image/jpg') && ($mime != 'image/png')) $error_array[] ='error type , please upload: jpg, jpeg, png';
-                $attach_id = media_handle_upload( $file, $new_user_id );
-            }   
-        }
-        if ($attach_id > 0){
-            //and if you want to set that image as Post  then use:
-            update_post_meta($new_user_id,'_thumbnail_id',$attach_id);
-        }
+
 
 //SKAL MAN PAKKE META CONTENT I ET ARRAY OG LOOPE DET IGENNEM EN QUERY?????
 
