@@ -45,6 +45,14 @@ function dc_registration_form_fields() {
 				</p>
 				<p>
 					<!-- Should we not have file submission here and/or have it sent to byg_dc? -->
+
+                <p>
+                
+                <input type="file" name="dc_camp_logo" id="dc_camp_logo"  multiple="false" />
+                <input type="hidden" name="post_id" id="post_id" value="55" />
+                <?php wp_nonce_field( 'dc_camp_logo', 'dc_camp_logo_nonce' ); ?>
+                </p>
+                    
 					<label for="dc_user_project_construction"><?php _e('Does your project include any construction work? (If yes, please send a description and drawing/picture to illustrate your concept to bygdc@roskilde-festival.dk)'); ?></label>
 					<textarea rows="3" name="dc_user_project_construction" id="dc_user_project_construction" class="form-control" placeholder="Contruction Plans" type="text"></textarea>
 				</p>
@@ -126,14 +134,7 @@ function dc_add_new_dreamer() {
     //   //Email address already registered
     //   dc_errors()->add('email_used', __('Email already registered'));
     // }
-    //if($user_pass == '') {
-      // passwords do not match
-     // dc_errors()->add('password_empty', __('Please enter a password'));
-    //}
-    //if($user_pass != $pass_confirm) {
-      // passwords do not match
-      //dc_errors()->add('password_mismatch', __('Passwords do not match'));
-    //}
+
  
    // $errors = dc_errors()->get_error_messages();
     $errors = '';
@@ -143,7 +144,6 @@ function dc_add_new_dreamer() {
  
         $new_user_id = wp_insert_user(array(
           'user_login'    => $user_login,
-          //'user_pass'     => $user_pass,
           'user_email'    => $user_email,
           'first_name'    => $user_first,
           'last_name'     => $user_last,
@@ -151,7 +151,29 @@ function dc_add_new_dreamer() {
           'role'        => 'dreamer'
         )
       );
+// Check that the nonce is valid, and the user can edit this post.
+    if ( isset( $_POST['dc_logo_upload_nonce'] ) && wp_verify_nonce( $_POST['dc_camp_logo_nonce'], 'dc_camp_logo' ) ) {
+        // The nonce was valid it is safe to continue.
 
+        // These files need to be included as dependencies when on the front end.
+        require_once( ABSPATH . 'wp-admin/includes/image.php' );
+        require_once( ABSPATH . 'wp-admin/includes/file.php' );
+        require_once( ABSPATH . 'wp-admin/includes/media.php' );
+        
+        // Let WordPress handle the upload.
+        // Remember, 'my_image_upload' is the name of our file input in our form above.
+        $attachment_id = media_handle_upload( 'dc_camp_logo', '0' );
+        
+        if ( is_wp_error( $attachment_id ) ) {
+            // There was an error uploading the image.
+        } else {
+            // The image was uploaded successfully!
+        }
+
+    } else {
+
+        // The security check failed, maybe show the user an error.
+    }
         //insert into wp_dc_camp
         // camp_id mediumint(9) NOT NULL AUTO_INCREMENT,
         // user_id int(10) NOT NULL,
@@ -165,7 +187,7 @@ function dc_add_new_dreamer() {
         // camp_registration_date datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
         // camp_modified datetime DEFAULT '0000-00-00 00:00:00' NULL,
         function dc_new_camp() {
-            global $wpdb, $new_user_id, $camp_name, $camp_phone, $camp_pro_desc, $camp_pat_no, $camp_pro_cons;
+            global $wpdb, $new_user_id, $camp_name, $camp_phone, $camp_pro_desc, $camp_pat_no, $camp_pro_cons,$camp_workshop;
             $table_name = $wpdb->prefix . 'dc_camp';
 
             $wpdb->insert( 
@@ -177,12 +199,37 @@ function dc_add_new_dreamer() {
                     'camp_description'       => $camp_pro_desc,
                     'camp_residents'         => $camp_pat_no,
                     'camp_construction'      => $camp_pro_cons,
+                    'camp_iconURL'           => '',
                     'camp_registration_date' => current_time( 'mysql' ), 
                 ) 
             );
 
-//print_r($new_user_id);
+//SKAL MAN PAKKE META CONTENT I ET ARRAY OG LOOPE DET IGENNEM EN QUERY?????
+
+
+
+        //DC META
+        // camp_id bigint(20) DEFAULT 0 NOT NULL,
+        // meta_key varchar(255) DEFAULT NULL,
+        // meta_value longtext DEFAULT NULL,  
+
+        // 'camp_workshop'          => $camp_workshop,
+        // 'camp_imageURL'          => $camp_img,
+        // 'camp_iconURL'           => $camp_ico,
+            $table_name = $wpdb->prefix . 'dc_camp_meta';
+            $wpdb->insert( 
+                $table_name, 
+                array(
+                    'camp_id'                => $new_user_id,
+                    'meta_key'               => 'camp_workshop',
+                    'meta_value'             => $camp_workshop,
+
+
+                ) 
+            );
         }
+
+
         dc_new_camp();
     if($new_user_id) {
         // send an email to the admin alerting them of the registration
@@ -194,7 +241,7 @@ function dc_add_new_dreamer() {
         //do_action('wp_login', $user_login);
  
         // send the newly created user to the home page after logging them in and add a confirmation message
-        wp_redirect(home_url() . '?state=success'); exit;
+        //wp_redirect(home_url() . '?state=success'); exit;
       }
  
     }
