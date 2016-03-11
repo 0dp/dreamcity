@@ -32,8 +32,10 @@ add_action( 'wp_enqueue_scripts', 'init_frontend' );
 
 function init_backend() {
     wp_register_style( 'bootstrap_css', plugins_url( '/vendor/bootstrap/css/bootstrap.min.css', __FILE__ ) );
+    wp_register_style( 'custom_admin', plugins_url( '/css/admin.css', __FILE__));
     wp_enqueue_script( 'bootstrap_js', plugins_url( '/vendor/bootstrap/js/bootstrap.min.js', __FILE__ ), array( 'jquery' ) );
     wp_enqueue_style( 'bootstrap_css' );
+    wp_enqueue_style( 'custom_admin');
 }
 
 add_action( 'admin_init', 'init_backend' ); 
