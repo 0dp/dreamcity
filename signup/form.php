@@ -252,6 +252,9 @@ function dc_add_new_dreamer() {
                     'camp_registration_date' => current_time( 'mysql' ), 
                 ) 
             );
+
+            $camp_id = $wpdb->insert_id;
+            
  //$wpdb->print_error();
 
 //echo 'din mor';
@@ -272,7 +275,7 @@ function dc_add_new_dreamer() {
             $wpdb->insert( 
                 $table_name, 
                 array(
-                    'camp_id'                => $new_user_id,
+                    'camp_id'                => $camp_id,
                     'meta_key'               => 'camp_workshop',
                     'meta_value'             => $camp_workshop,
 
