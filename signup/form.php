@@ -45,24 +45,28 @@ function dc_registration_form_fields() {
 				</p>
 				<p>
 					<!-- Should we not have file submission here and/or have it sent to byg_dc? -->
-                    <label for="dc_camp_logo">
-                        <?php _e('Camp Logo - Please upload your camps logo. 300x300px preferably, png or jpg, max file size is 500kb'); ?>
-                    </label>
 
-                    <input type="file" name="dc_camp_logo" id="dc_camp_logo"  multiple="false" />
-                    <input type="hidden" name="post_id" id="post_id" value="55" />
-                    <?php wp_nonce_field( 'dc_camp_logo', 'dc_camp_logo_nonce' ); ?>
-                </p>
-                    <p>
-                    <label for="dc_camp_img">
-                        <?php _e('Camp Image - Please upload your camps Image. png or jpg, max file size is 500kb'); ?>
-                    </label>
+                <p>
+                <label for="dc_camp_logo">
+                    <?php _e('Camp Logo - Please upload your camps logo. 300x300px preferably, png or jpg, max file size is 500kb'); ?>
+                </label>
 
-                    <input type="file" name="dc_camp_img" id="dc_camp_img"  multiple="false" />
-                    <input type="hidden" name="post_id" id="post_id" value="55" />
-                    <?php wp_nonce_field( 'dc_camp_img', 'dc_camp_img_nonce' ); ?>
+                <input type="file" name="dc_camp_logo" id="dc_camp_logo"  multiple="false" />
+                <input type="hidden" name="post_id" id="post_id" value="55" />
+                <?php wp_nonce_field( 'dc_camp_logo', 'dc_camp_logo_nonce' ); ?>
                 </p>
-                <p>               
+
+                <label for="dc_camp_img">
+                    <?php _e('Camp Image - Please upload your camps Image. png or jpg, max file size is 500kb'); ?>
+                </label>
+
+                <input type="file" name="dc_camp_img" id="dc_camp_img"  multiple="false" />
+                <input type="hidden" name="post_id" id="post_id" value="55" />
+                <?php wp_nonce_field( 'dc_camp_img', 'dc_camp_img_nonce' ); ?>
+                </p>
+                    
+
+
 					<label for="dc_user_project_construction"><?php _e('Does your project include any construction work? (If yes, please send a description and drawing/picture to illustrate your concept to bygdc@roskilde-festival.dk)'); ?></label>
 					<textarea rows="3" name="dc_user_project_construction" id="dc_user_project_construction" class="form-control" placeholder="Contruction Plans" type="text"></textarea>
 				</p>
@@ -152,7 +156,10 @@ function dc_add_new_dreamer() {
  
     // only create the user in if there are no errors
     if(empty($errors)) {
- 
+ // $wpdb->show_errors();
+
+
+
         $new_user_id = wp_insert_user(array(
           'user_login'    => $user_login,
           'user_email'    => $user_email,
@@ -162,9 +169,9 @@ function dc_add_new_dreamer() {
           'role'        => 'dreamer'
         )
       );
-
+// $wpdb->print_error();
      if ( !is_wp_error( $new_user_id ) ) {
-    // //echo "User created : ". $user_id;
+   // echo "User created : ". $new_user_id;
     
 
 
@@ -198,9 +205,23 @@ function dc_add_new_dreamer() {
                 //echo 'yolo' . var_dump($attach_id);
                 
             }
-
+            // foreach ($_FILES as $file => $array) {
+            // $mime = $_FILES[$file]['type'];
+            // $filesize = $_FILES[$file]['size'];
+            // $maxsizef = 524288;
+            // if($filesize > $maxsizef) $error_array[] = 'error size, max file size = 500 KB';
+            // if(($mime != 'image/jpeg') && ($mime != 'image/jpg') && ($mime != 'image/png')) $error_array[] ='error type , please upload: jpg, jpeg, png';
+            //     $attach_id = media_handle_upload( $file, $new_user_id );
+            //     $campICO_url = wp_get_attachment_url($attach_id);
+                // $campIMG_url = wp_get_attachment_url($attach_id);
+                // $fileRes[]=array('ICO' => $campICO_url, 'IMG' => $campIMG_url);
+               
         }
- 
+        // if ($attach_id > 0){
+        //     //and if you want to set that image as Post  then use:
+        //     update_post_meta($new_user_id,'_thumbnail_id',$attach_id);
+        // }
+
         //insert into wp_dc_camp
         // camp_id mediumint(9) NOT NULL AUTO_INCREMENT,
         // user_id int(10) NOT NULL,
@@ -216,6 +237,7 @@ function dc_add_new_dreamer() {
         function dc_new_camp() {
             global $wpdb, $new_user_id, $camp_name, $camp_phone, $camp_pro_desc, $camp_pat_no, $camp_pro_cons,$camp_workshop, $campICO_url, $campIMG_url;
             $table_name = $wpdb->prefix . 'dc_camp';
+ //$wpdb->show_errors();
             $wpdb->insert( 
                 $table_name, 
                 array(
@@ -230,8 +252,9 @@ function dc_add_new_dreamer() {
                     'camp_registration_date' => current_time( 'mysql' ), 
                 ) 
             );
+ //$wpdb->print_error();
 
-
+//echo 'din mor';
 
 //SKAL MAN PAKKE META CONTENT I ET ARRAY OG LOOPE DET IGENNEM EN QUERY?????
 
@@ -260,6 +283,10 @@ function dc_add_new_dreamer() {
 
 
     dc_new_camp();
+
+
+
+        }
     if($new_user_id) {
         // send an email to the admin alerting them of the registration
         wp_new_user_notification($new_user_id);
@@ -270,11 +297,8 @@ function dc_add_new_dreamer() {
         //do_action('wp_login', $user_login);
  
         // send the newly created user to the home page after logging them in and add a confirmation message
-        //wp_redirect(home_url() . '?state=success'); exit;
+        wp_redirect(home_url() . '?state=success'); exit;
       }
-
-        }
-
     }
  
   }
