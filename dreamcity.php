@@ -108,11 +108,21 @@ function dc_alert() {
             }
     }
 
-    else {}
+   
 }
 
 // ADD ACTIONS
 
 add_filter( 'dc_alert_hook', 'dc_alert' );
 add_action('admin_menu', 'dc_admin_reg');
+
+
+function alertboks() {
+
+    ob_start();
+    do_action( 'dc_alert_hook' );
+    return ob_get_clean();
+}
+
+add_shortcode( 'alertboks', 'alertboks' );
 
