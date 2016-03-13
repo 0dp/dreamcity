@@ -291,8 +291,9 @@ function dc_add_new_dreamer() {
         }
     if($new_user_id) {
         global $new_user_id;
-        // send an email to the admin alerting them of the registration
-        wp_new_user_notification($new_user_id);
+
+        // send an email to the admin alerting them of the registration and send an email to the dreamer that we received their application.
+        wp_new_user_notification($new_user_id, '', 'both');
  
         // log the new user in
         //wp_setcookie($user_login, $user_pass, true);
