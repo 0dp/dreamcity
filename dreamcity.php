@@ -163,6 +163,35 @@ add_filter( 'login_redirect', 'my_login_redirect', 10, 3 );
 //DREAM CITY LOGO ON LOGIN
 function my_login_logo() { ?>
     <style type="text/css">
+@font-face{
+    font-family:'rf4000-bold';
+    src:url('http://wp.dream-city.dk/fonts/4000-bold-webfont.eot');
+    src:url('http://wp.dream-city.dk/fonts/4000-bold-webfont.eot?#iefix') format('embedded-opentype'),
+    url('http://wp.dream-city.dk/fonts/4000-bold-webfont.woff') format('woff'),
+    url('http://wp.dream-city.dk/fonts/4000-bold-webfont.ttf') format('truetype');
+    font-weight:normal;
+    font-style:normal;
+}
+
+@font-face{
+    font-family:'rf4000';
+    src:url('http://wp.dream-city.dk/fonts/4000-regular-webfont.eot');
+    src:url('http://wp.dream-city.dk/fonts/4000-regular-webfont.eot?#iefix') format('embedded-opentype'),
+    url('http://wp.dream-city.dk/fonts/4000-regular-webfont.woff') format('woff'),
+    url('http://wp.dream-city.dk/fonts/4000-regular-webfont.ttf') format('truetype');
+    font-weight:400;
+    font-style:normal;
+}
+        body {
+            background: #2E2E2E;
+            font-family: rf4000;
+        }
+
+        #login {
+    width: 470px;
+    padding: 8% 0 0;
+    margin: auto;
+}
         .login h1 a {
             background-image: url('http://wp.dream-city.dk/wp-content/uploads/2016/03/dreamcity-bubblelogo-greenwhite-300x213.png');
             padding-bottom: 30px;
@@ -170,7 +199,62 @@ function my_login_logo() { ?>
             width: auto;
         }
         
-        
+        .login #login_error, .login .message {
+    border-left: 0;
+    padding: 12px;
+    margin-left: 0;
+    background-color: #434343;
+    -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+    color: #D3874E;
+    text-transform: uppercase;
+    font-family: rf4000-bold;
+}
+  .login form {
+    margin-top: 20px;
+    margin-left: 0;
+    padding: 26px 24px 46px;
+    background: #434343;
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.13);
+    box-shadow: 0 1px 3px rgba(0,0,0,.13);
+}
+.login label {
+    color: #D1864E;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-family: rf4000-bold;
+}
+
+.wp-core-ui .button-primary {
+    background: #D3874E;
+    border-color: transparent;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: none;
+    text-transform: uppercase;
+    font-family: rf4000-bold;
+    border-radius: 0;
+}  
+
+.wp-core-ui .button-primary:hover {
+    background: #262626;
+    border-color: transparent;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    color: #D3874E;
+    text-decoration: none;
+    text-shadow: none;
+    text-transform: uppercase;
+    font-family: rf4000-bold;
+    border-radius: 0;
+}  
+
+input[type="text"] {
+        color: #D3874E;
+
+}
     </style>
 <?php }
 add_action( 'login_enqueue_scripts', 'my_login_logo' );
