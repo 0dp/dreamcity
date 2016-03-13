@@ -169,7 +169,7 @@ function dc_add_new_dreamer() {
           'role'        => 'dreamer'
         )
       );
-// $wpdb->print_error();
+ //$wpdb->print_error();
      if ( !is_wp_error( $new_user_id ) ) {
    // echo "User created : ". $new_user_id;
     
@@ -254,7 +254,6 @@ function dc_add_new_dreamer() {
             );
 
             $camp_id = $wpdb->insert_id;
-            //echo "yolo" . $camp_id;
  //$wpdb->print_error();
 
 //echo 'din mor';
@@ -291,6 +290,7 @@ function dc_add_new_dreamer() {
 
         }
     if($new_user_id) {
+        global $new_user_id;
         // send an email to the admin alerting them of the registration
         wp_new_user_notification($new_user_id);
  
@@ -300,7 +300,7 @@ function dc_add_new_dreamer() {
         //do_action('wp_login', $user_login);
  
         // send the newly created user to the home page after logging them in and add a confirmation message
-        //wp_redirect(home_url() . '?state=success'); exit;
+        wp_redirect(home_url() . '?state=success'); exit;
       }
     }
  

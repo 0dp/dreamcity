@@ -6,10 +6,10 @@
 
 
 <?php 
-$result = $wpdb->get_results( "SELECT wp_users.display_name, wp_users.user_email,  wp_dc_camp.*,wp_dc_camp_meta.*
-FROM wp_dc_camp 
-LEFT JOIN wp_dc_camp_meta ON wp_dc_camp.camp_id = wp_dc_camp_meta.camp_id
-LEFT JOIN wp_users ON wp_dc_camp.user_id = wp_users.ID
+$result = $wpdb->get_results( "SELECT wp0_users.display_name, wp0_users.user_email,  wp0_dc_camp.*,wp0_dc_camp_meta.*
+FROM wp0_dc_camp 
+LEFT JOIN wp0_dc_camp_meta ON wp0_dc_camp.camp_id = wp0_dc_camp_meta.camp_id
+LEFT JOIN wp0_users ON wp0_dc_camp.user_id = wp0_users.ID
 "); 
 
 // echo "<pre>"; print_r($result); echo "</pre>";
