@@ -18,7 +18,7 @@ if ( !function_exists('wp_new_user_notification') ) {
 
         $message  = __('Hi there,') . "\r\n\r\n";
         $message .= sprintf(__("Welcome to %s! Here's how to log in:"), get_option('blogname')) . "\r\n\r\n";
-        $message .= sprintf(__("We will moderate your application, and when it's approved you will receive your login credentials.") . "\r\n";
+        $message .= sprintf(__("We will moderate your application, and when it's approved you will receive your login credentials.")) . "\r\n";
         $message .= sprintf(__("At which point you can log in here: "), wp_login_url()) . "\r\n";
 
         $message .= sprintf(__('If you have any problems, please contact us at %s.'), get_option('admin_email')) . "\r\n\r\n";

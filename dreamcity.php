@@ -132,11 +132,6 @@ add_shortcode( 'alertbox', 'alertbox' );
 
 
 
-//REMOVE REGISTRATION LINK FROM LOGIN FORM
-add_filter('register','no_register_link');
-function no_register_link($url){
-    return '';
-}
 
 /**
  * Redirect user after successful login.
@@ -178,3 +173,9 @@ function my_login_logo() { ?>
         
     </style>
 <?php }
+add_action( 'login_enqueue_scripts', 'my_login_logo' );
+
+add_filter('register','no_register_link');
+function no_register_link($url){
+    return '';
+}
