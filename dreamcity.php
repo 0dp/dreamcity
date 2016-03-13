@@ -13,6 +13,8 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 //Includes
 include( plugin_dir_path( __FILE__ ) . 'signup/signup.php');
 include( plugin_dir_path( __FILE__ ) . 'vendor/new-user-approve/new-user-approve.php');
+include( plugin_dir_path( __FILE__ ) . 'email/registration.php');
+
 
 include_once dirname( __FILE__ ).'/install/db_install.php';
 register_activation_hook( __FILE__,  array( 'dc_installer', 'dc_db_install' ) );
@@ -128,3 +130,51 @@ function alertbox() {
 
 add_shortcode( 'alertbox', 'alertbox' );
 
+
+
+//REMOVE REGISTRATION LINK FROM LOGIN FORM
+add_filter('register','no_register_link');
+function no_register_link($url){
+    return '';
+}
+
+/**
+ * Redirect user after successful login.
+ *
+ * @param string $redirect_to URL to redirect to.
+ * @param string $request URL the user is coming from.
+ * @param object $user Logged user's data.
+ * @return string
+ */
+function my_login_redirect( $redirect_to, $request, $user ) {
+    //is there a user to check?
+    global $user;
+    if ( isset( $user->roles ) && is_array( $user->roles ) ) {
+        //check for admins
+        if ( in_array( 'administrator', $user->roles ) ) {
+            // redirect them to the default place
+            return $redirect_to;
+        } else {
+            return home_url();
+        }
+    } else {
+        return $redirect_to;
+    }
+}
+
+add_filter( 'login_redirect', 'my_login_redirect', 10, 3 );
+
+
+//DREAM CITY LOGO ON LOGIN
+function my_login_logo() { ?>
+    <style type="text/css">
+        .login h1 a {
+            background-image: url('http://wp.dream-city.dk/wp-content/uploads/2016/03/dreamcity-bubblelogo-greenwhite-300x213.png');
+            padding-bottom: 30px;
+            background-size: 160px;
+            width: auto;
+        }
+        
+        
+    </style>
+<?php }
