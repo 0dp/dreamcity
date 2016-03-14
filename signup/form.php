@@ -147,7 +147,7 @@ function dc_process_reg_form(){
 			
 			wp_mail( $to, $subject, $message, '' );
 			
-			//wp_redirect(home_url() . '?state=success'); exit;
+			wp_redirect(home_url() . '?state=success'); exit;
 		}
 	}	
 	
