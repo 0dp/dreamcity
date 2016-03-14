@@ -20,6 +20,15 @@ function dc_process_reg_form(){
 		$camp_workshop3 = $_POST["optionsRadios3"];
 		$camp_workshop4 = $_POST["optionsRadios4"];
 		
+		if( isset( $_POST["optionsRadios1"]) )
+			$camp_workshop1 = $_POST["optionsRadios1"];
+		if( isset( $_POST["optionsRadios2"] ))
+			$camp_workshop2 = $_POST["optionsRadios2"];
+		if( isset( $_POST["optionsRadios3"] ))
+			$camp_workshop3 = $_POST["optionsRadios3"];
+		if( isset( $_POST["optionsRadios4"] ))
+			$camp_workshop4 = $_POST["optionsRadios4"];		
+		
 		$camp = new DreamCityCamp($user_login, $user_first, $user_last, $user_email, $camp_phone, $camp_name,$camp_pro_desc, $camp_pro_cons, $camp_pat_no, $camp_workshop1, $camp_workshop2, $camp_workshop3, $camp_workshop4);
 		if( $camp->HasError() ){
 					
@@ -141,7 +150,7 @@ function dc_registration_form_fields() {
 
 				<div class="checkbox">
 					<label>
-					    <input type="checkbox" name="optionsRadio1" id="optionsRadios1" value="Thursday 17. March" >
+					    <input type="checkbox" name="optionsRadios1" id="optionsRadios1" value="Thursday 17. March" >
 						Thursday 17. March @ 17.00-20-00
 					</label>
 				</div>
