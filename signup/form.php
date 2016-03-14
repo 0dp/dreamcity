@@ -49,24 +49,28 @@ function dc_registration_form_fields() {
 					<!-- Should we not have file submission here and/or have it sent to byg_dc? -->
 
                 <p>
-                <label for="dc_camp_logo">
-                    <?php _e('Camp Logo - Please upload your camps logo. 300x300px preferably, png or jpg, max file size is 500kb'); ?>
-                </label>
+                	<label for="dc_camp_logo">
+                   		 <?php _e('Camp Logo - Please upload your camps logo. 300x300px preferably, png or jpg, max file size is 500kb'); ?>
+               		 </label>
 
-                <input type="file" name="dc_camp_logo" id="dc_camp_logo"  multiple="false" />
-                <input type="hidden" name="post_id" id="post_id" value="55" />
-                <?php wp_nonce_field( 'dc_camp_logo', 'dc_camp_logo_nonce' ); ?>
+                	<input type="file" name="dc_camp_logo" id="dc_camp_logo"  multiple="false" />
+                	<input type="hidden" name="post_id" id="post_id" value="55" />
+                	<?php wp_nonce_field( 'dc_camp_logo', 'dc_camp_logo_nonce' ); ?>
                 </p>
 
-                <label for="dc_camp_img">
-                    <?php _e('Camp Image - Please upload your camps Image. png or jpg, max file size is 500kb'); ?>
-                </label>
+				<p>
+                	<label for="dc_camp_img">
+                    	<?php _e('Camp Image - Please upload your camps Image. png or jpg, max file size is 500kb'); ?>
+                	</label>
 
-                <input type="file" name="dc_camp_img" id="dc_camp_img"  multiple="false" />
-                <input type="hidden" name="post_id" id="post_id" value="55" />
-                <?php wp_nonce_field( 'dc_camp_img', 'dc_camp_img_nonce' ); ?>
+                	<input type="file" name="dc_camp_img" id="dc_camp_img"  multiple="false" />
+                	<input type="hidden" name="post_id" id="post_id" value="55" />
+                	<?php wp_nonce_field( 'dc_camp_img', 'dc_camp_img_nonce' ); ?>
                 </p>
-					<label for="dc_user_project_construction"><?php _e('Does your project include any construction work? (If yes, please send a description and drawing/picture to illustrate your concept to bygdc@roskilde-festival.dk)'); ?></label>
+
+				<p>
+					<label for="dc_user_project_construction"><?php _e('Does your project include any construction work? (If yes, please send a description and drawing/picture to illustrate your concept to bygdc@roskilde-festival.dk)'); ?>
+					</label>
 					<textarea rows="3" name="dc_user_project_construction" id="dc_user_project_construction" class="form-control" placeholder="Contruction Plans" type="text"></textarea>
 				</p>
 				<p class="no-pad">

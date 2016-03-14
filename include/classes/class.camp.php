@@ -252,7 +252,7 @@ class DreamCityCamp
 			}else{			
 				//echo( "User created : ". $this->user_id );
 				$this->user_id = $new_user_id;
-				echo '<div id="message" class="error"><p>' . $this->user_id . '</p></div>';
+				//echo '<div id="message" class="error"><p>' . $this->user_id . '</p></div>';
 				$this->AddCampImageData();
 				$Ok = $this->StoreCamp();
 			}
