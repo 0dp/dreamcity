@@ -46,7 +46,7 @@ class DreamCityCamp
     public $success = array();
 	public $error_array = array();
 	
-	function __construct($aUserLogin, $aUserFirstName, $aUserLastName, $aUserEmail, $aUserPhone, $aCampName,$aCampDescription, $aCampConstruction, $aCampParticipants){
+	function __construct($aUserLogin, $aUserFirstName, $aUserLastName, $aUserEmail, $aUserPhone, $aCampName,$aCampDescription, $aCampConstruction, $aCampParticipants, $aWorkshop1, $aWorkshop2, $aWorkshop3, $aWorkshop4){
 								
         //Sanitize		
 		$this->user_login = sanitize($aUserLogin);
@@ -59,6 +59,11 @@ class DreamCityCamp
 		$this->camp_description = sanitize($aCampDescription);		
 		$this->camp_construction = sanitize($aCampConstruction);
 		$this->camp_participants = $aCampParticipants;
+
+		$this->camp_workshop1 = sanitize($aWorkshop1);
+		$this->camp_workshop2 = sanitize($aWorkshop2);
+		$this->camp_workshop3 = sanitize($aWorkshop3);
+		$this->camp_workshop4 = sanitize($aWorkshop4);
 				
 		if( $this->camp_name == "" ){
 		  $this->fail_campname = true;          
@@ -152,7 +157,7 @@ class DreamCityCamp
 		global $wpdb;
 		$Ok = true;
 		$table_name = $wpdb->prefix . 'dc_camp';
-		//$wpdb->show_errors();
+		$wpdb->show_errors();
 		$wpdb->insert( 
 		$table_name, 
                 array(
@@ -167,8 +172,8 @@ class DreamCityCamp
                     'camp_registration_date' => current_time( 'mysql' ), 
                 ) 
             );			
-        $this->camp_id = $wpdb->insert_id;
-		
+         $this->camp_id = $wpdb->insert_id;
+		echo $this->camp_id;
 		// Insert workshop dates
 		if( $this->camp_id > 0 ){
 			$table_name = $wpdb->prefix . 'dc_camp_meta';		
@@ -176,17 +181,17 @@ class DreamCityCamp
 				$wpdb->insert( 
 					$table_name, 
 					array(
-						'camp_id'                => $camp_id,
+						'camp_id'                => $this->camp_id,
 						'meta_key'               => 'camp_workshop1',
 						'meta_value'             => $this->camp_workshop1,
 					) 
-				);		
+				);	
 			}
 			if( $this->camp_workshop2 != "" ){
 				$wpdb->insert( 
 					$table_name, 
 					array(
-						'camp_id'                => $camp_id,
+						'camp_id'                => $this->camp_id,
 						'meta_key'               => 'camp_workshop2',
 						'meta_value'             => $this->camp_workshop2,
 					) 
@@ -196,7 +201,7 @@ class DreamCityCamp
 				$wpdb->insert( 
 					$table_name, 
 					array(
-						'camp_id'                => $camp_id,
+						'camp_id'                => $this->camp_id,
 						'meta_key'               => 'camp_workshop3',
 						'meta_value'             => $this->camp_workshop3,
 					) 
@@ -206,7 +211,7 @@ class DreamCityCamp
 				$wpdb->insert( 
 					$table_name, 
 					array(
-						'camp_id'                => $camp_id,
+						'camp_id'                => $this->camp_id,
 						'meta_key'               => 'camp_workshop4',
 						'meta_value'             => $this->camp_workshop4,
 					) 
@@ -214,15 +219,15 @@ class DreamCityCamp
 			}
 		}
 		else{
-			// failed to store insert camp data.
-			$Ok = false;
+		// 	// failed to store insert camp data.
+		 	$Ok = false;
 		}
 		
 		return $Ok;
 		
 	}
 	
-	public function AddCampToDatabase(){
+	public function AddCampToDatabase() {
 		global $wpdb;				
 		$Ok = true;
 
