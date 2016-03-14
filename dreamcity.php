@@ -165,20 +165,20 @@ function my_login_logo() { ?>
     <style type="text/css">
         @font-face{
             font-family:'rf4000-bold';
-            src:url('http://wp.dream-city.dk/fonts/4000-bold-webfont.eot');
-            src:url('http://wp.dream-city.dk/fonts/4000-bold-webfont.eot?#iefix') format('embedded-opentype'),
-            url('http://wp.dream-city.dk/fonts/4000-bold-webfont.woff') format('woff'),
-            url('http://wp.dream-city.dk/fonts/4000-bold-webfont.ttf') format('truetype');
+            src:url('http://www.dream-city.dk/fonts/4000-bold-webfont.eot');
+            src:url('http://www.dream-city.dk/fonts/4000-bold-webfont.eot?#iefix') format('embedded-opentype'),
+            url('http://www.dream-city.dk/fonts/4000-bold-webfont.woff') format('woff'),
+            url('http://www.dream-city.dk/fonts/4000-bold-webfont.ttf') format('truetype');
             font-weight:normal;
             font-style:normal;
         }
 
         @font-face{
             font-family:'rf4000';
-            src:url('http://wp.dream-city.dk/fonts/4000-regular-webfont.eot');
-            src:url('http://wp.dream-city.dk/fonts/4000-regular-webfont.eot?#iefix') format('embedded-opentype'),
-            url('http://wp.dream-city.dk/fonts/4000-regular-webfont.woff') format('woff'),
-            url('http://wp.dream-city.dk/fonts/4000-regular-webfont.ttf') format('truetype');
+            src:url('http://www.dream-city.dk/fonts/4000-regular-webfont.eot');
+            src:url('http://www.dream-city.dk/fonts/4000-regular-webfont.eot?#iefix') format('embedded-opentype'),
+            url('http://www.dream-city.dk/fonts/4000-regular-webfont.woff') format('woff'),
+            url('http://www.dream-city.dk/fonts/4000-regular-webfont.ttf') format('truetype');
             font-weight:400;
             font-style:normal;
         }
@@ -193,7 +193,7 @@ function my_login_logo() { ?>
              margin: auto;
 }
         .login h1 a {
-            background-image: url('http://wp.dream-city.dk/wp-content/uploads/2016/03/dreamcity-bubblelogo-greenwhite-300x213.png');
+            background-image: url('http://www.dream-city.dk/wp-content/uploads/2016/03/dreamcity-bubblelogo-greenwhite-300x213.png');
             padding-bottom: 30px;
             background-size: 160px;
             width: auto;
