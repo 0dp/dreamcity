@@ -105,204 +105,47 @@ function dc_registration_form_fields() {
 	return ob_get_clean();
 }
 
-function dc_add_new_dreamer() {
-    global $wpdb, $new_user_id, $user_login, $user_email, $user_first, $user_last, $camp_phone, $camp_name, $camp_name, $camp_pat_no, $camp_pro_desc, $camp_pro_cons, $camp_workshop, $newupload,$campICO_url, $campIMG_url;
-
-
-    if (isset( $_POST["dc_user_email"] ) && wp_verify_nonce($_POST['dc_register_nonce'], 'dc-register-nonce')) {
-    $user_login    = $_POST["dc_user_email"];  
-    $user_email    = $_POST["dc_user_email"];
-    $user_first    = $_POST["dc_user_first"];
-    $user_last     = $_POST["dc_user_last"];
-    $camp_phone    = $_POST["dc_user_phone"];
-    $camp_name     = $_POST["dc_user_camp_name"];
-    $camp_pat_no   = $_POST["dc_user_participants"];
-    $camp_pro_desc = $_POST["dc_user_project_desc"];
-    $camp_pro_cons = $_POST["dc_user_project_construction"];
-    $camp_workshop = $_POST["optionsRadios"];
-
-    //FINISH CHECKS
-
-    // this is required for username checks
-    // require_once(ABSPATH . WPINC . '/registration.php');
- 
-    // if(username_exists($user_login)) {
-    //   // Username already registered
-    //   dc_errors()->add('username_unavailable', __('Username already taken'));
-    // }
-    // if(!validate_username($user_login)) {
-    //   // invalid username
-    //   dc_errors()->add('username_invalid', __('Invalid username'));
-    // }
-    // if($user_login == '') {
-    //   // empty username
-    //   dc_errors()->add('username_empty', __('Please enter a username'));
-    // }
-    // if(!is_email($user_email)) {
-    //   //invalid email
-    //   dc_errors()->add('email_invalid', __('Invalid email'));
-    // }
-    // if(email_exists($user_email)) {
-    //   //Email address already registered
-    //   dc_errors()->add('email_used', __('Email already registered'));
-    // }
-
- 
-   // $errors = dc_errors()->get_error_messages();
-    $errors = '';
- 
-    // only create the user in if there are no errors
-    if(empty($errors)) {
- // $wpdb->show_errors();
-
-
-
-        $new_user_id = wp_insert_user(array(
-          'user_login'    => $user_login,
-          'user_email'    => $user_email,
-          'first_name'    => $user_first,
-          'last_name'     => $user_last,
-          'user_registered' => date('Y-m-d H:i:s'),
-          'role'        => 'dreamer'
-        )
-      );
- //$wpdb->print_error();
-     if ( !is_wp_error( $new_user_id ) ) {
-   // echo "User created : ". $new_user_id;
-    
-
-
-    if (!function_exists('wp_generate_attachment_metadata')) {
-            require_once(ABSPATH . "wp-admin" . '/includes/image.php');
-            require_once(ABSPATH . "wp-admin" . '/includes/file.php');
-            require_once(ABSPATH . "wp-admin" . '/includes/media.php');
-        }
-        
-        if ($_FILES) {
-
-            if ($_FILES['dc_camp_logo']) {
-                 $mime = $_FILES['dc_camp_logo']['type'];
-            $filesize = $_FILES['dc_camp_logo']['size'];
-            $maxsizef = 524288;
-            if($filesize > $maxsizef) $error_array[] = 'error size, max file size = 500 KB';
-            if(($mime != 'image/jpeg') && ($mime != 'image/jpg') && ($mime != 'image/png')) $error_array[] ='error type , please upload: jpg, jpeg, png';
-                $attach_id = media_handle_upload( 'dc_camp_logo', $new_user_id );
-                $campICO_url = wp_get_attachment_url($attach_id);
-                
-            }
-
-        if ($_FILES['dc_camp_img']) {
-                 $mime = $_FILES['dc_camp_img']['type'];
-            $filesize = $_FILES['dc_camp_img']['size'];
-            $maxsizef = 524288;
-            if($filesize > $maxsizef) $error_array[] = 'error size, max file size = 500 KB';
-            if(($mime != 'image/jpeg') && ($mime != 'image/jpg') && ($mime != 'image/png')) $error_array[] ='error type , please upload: jpg, jpeg, png';
-                $attach_id = media_handle_upload( 'dc_camp_img', $new_user_id );
-                $campIMG_url = wp_get_attachment_url($attach_id);
-                //echo 'yolo' . var_dump($attach_id);
-                
-            }
-            // foreach ($_FILES as $file => $array) {
-            // $mime = $_FILES[$file]['type'];
-            // $filesize = $_FILES[$file]['size'];
-            // $maxsizef = 524288;
-            // if($filesize > $maxsizef) $error_array[] = 'error size, max file size = 500 KB';
-            // if(($mime != 'image/jpeg') && ($mime != 'image/jpg') && ($mime != 'image/png')) $error_array[] ='error type , please upload: jpg, jpeg, png';
-            //     $attach_id = media_handle_upload( $file, $new_user_id );
-            //     $campICO_url = wp_get_attachment_url($attach_id);
-                // $campIMG_url = wp_get_attachment_url($attach_id);
-                // $fileRes[]=array('ICO' => $campICO_url, 'IMG' => $campIMG_url);
-               
-        }
-        // if ($attach_id > 0){
-        //     //and if you want to set that image as Post  then use:
-        //     update_post_meta($new_user_id,'_thumbnail_id',$attach_id);
-        // }
-
-        //insert into wp_dc_camp
-        // camp_id mediumint(9) NOT NULL AUTO_INCREMENT,
-        // user_id int(10) NOT NULL,
-        // camp_name text(100) NOT NULL, 
-        // camp_description text NOT NULL,
-        // camp_url varchar(70) DEFAULT '' NOT NULL,
-        // camp_imageURL varchar(100) DEFAULT '' NOT NULL,
-        // camp_iconURL varchar(100) DEFAULT '' NOT NULL,
-        // camp_residents smallint(9) DEFAULT 0 NOT NULL,
-        // camp_notes text DEFAULT NULL,
-        // camp_registration_date datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-        // camp_modified datetime DEFAULT '0000-00-00 00:00:00' NULL,
-        function dc_new_camp() {
-            global $wpdb, $new_user_id, $camp_name, $camp_phone, $camp_pro_desc, $camp_pat_no, $camp_pro_cons,$camp_workshop, $campICO_url, $campIMG_url;
-            $table_name = $wpdb->prefix . 'dc_camp';
- //$wpdb->show_errors();
-            $wpdb->insert( 
-                $table_name, 
-                array(
-                    'user_id'                => $new_user_id,
-                    'camp_name'              => $camp_name,
-                    'camp_phone'             => $camp_phone,
-                    'camp_description'       => $camp_pro_desc,
-                    'camp_residents'         => $camp_pat_no,
-                    'camp_construction'      => $camp_pro_cons,
-                    'camp_iconURL'           => $campICO_url,
-                    'camp_imageURL'          => $campIMG_url,
-                    'camp_registration_date' => current_time( 'mysql' ), 
-                ) 
-            );
-
-            $camp_id = $wpdb->insert_id;
- //$wpdb->print_error();
-
-//echo 'din mor';
-
-//SKAL MAN PAKKE META CONTENT I ET ARRAY OG LOOPE DET IGENNEM EN QUERY?????
-
-
-
-        //DC META
-        // camp_id bigint(20) DEFAULT 0 NOT NULL,
-        // meta_key varchar(255) DEFAULT NULL,
-        // meta_value longtext DEFAULT NULL,  
-
-        // 'camp_workshop'          => $camp_workshop,
-        // 'camp_imageURL'          => $camp_img,
-        // 'camp_iconURL'           => $camp_ico,
-            $table_name = $wpdb->prefix . 'dc_camp_meta';
-            $wpdb->insert( 
-                $table_name, 
-                array(
-                    'camp_id'                => $camp_id,
-                    'meta_key'               => 'camp_workshop',
-                    'meta_value'             => $camp_workshop,
-
-
-                ) 
-            );
-        }
-
-
-    dc_new_camp();
-
-
-
-        }
-    if($new_user_id) {
-        global $new_user_id;
-
-        // send an email to the admin alerting them of the registration and send an email to the dreamer that we received their application.
-        wp_new_user_notification($new_user_id, '', 'both');
- 
-        // log the new user in
-        //wp_setcookie($user_login, $user_pass, true);
-        //wp_set_current_user($new_user_id, $user_login); 
-        //do_action('wp_login', $user_login);
- 
-        // send the newly created user to the home page after logging them in and add a confirmation message
-        wp_redirect(home_url() . '?state=success'); exit;
-      }
-    }
- 
-  }
+function dc_process_reg_form(){
+	
+	if (isset( $_POST["dc_user_email"] ) && wp_verify_nonce($_POST['dc_register_nonce'], 'dc-register-nonce')) 
+	{
+		$user_login    = $_POST["dc_user_email"];  
+		$user_email    = $_POST["dc_user_email"];
+		$user_first    = $_POST["dc_user_first"];
+		$user_last     = $_POST["dc_user_last"];
+		$camp_phone    = $_POST["dc_user_phone"];
+		$camp_name     = $_POST["dc_user_camp_name"];
+		$camp_pat_no   = $_POST["dc_user_participants"];
+		$camp_pro_desc = $_POST["dc_user_project_desc"];
+		$camp_pro_cons = $_POST["dc_user_project_construction"];
+		$camp_workshop = $_POST["optionsRadios"];
+		
+		$camp = new DreamCityCamp($user_login, $user_first, $user_last, $user_email, $camp_phone, $camp_name,$camp_pro_desc, $camp_pro_cons, $camp_pat_no);
+		if( $camp->HasError() ){
+					
+		}
+		else if( !$camp->AddCampToDatabase() ){			
+			// Show an error?		
+		}else{
+			
+			//wp_new_user_notification($camp->user_id,'', 'both'); 
+			// log the new user in
+			//wp_setcookie($user_login, $user_pass, true);
+			//wp_set_current_user($new_user_id, $user_login); 
+			//do_action('wp_login', $user_login); 
+			// send the newly created user to the home page after logging them in and add a confirmation message
+			
+			$to = $camp->user_email;
+			$message = sprintf( 'Hey [%s]. We have reveiced your registration. Oncer we have reviewed it we will get back to you. \n\n Dream On', $camp->camp_name, ENT_QUOTES );
+			$subject = "Welcome to Dream City";
+			
+			wp_mail( $to, $subject, $message, dc_email_header() );
+			
+			//wp_redirect(home_url() . '?state=success'); exit;
+		}
+	}	
+	
 }
-add_action('init', 'dc_add_new_dreamer');
+
+add_action('init', 'dc_process_reg_form');
 ?>

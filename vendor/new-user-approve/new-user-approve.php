@@ -592,6 +592,7 @@ class pw_new_user_approve {
 	 * @uses registration_errors
 	 */
 	public function show_user_pending_message( $errors ) {
+		
 		if ( !empty( $_POST['redirect_to'] ) ) {
 			// if a redirect_to is set, honor it
 			wp_safe_redirect( $_POST['redirect_to'] );

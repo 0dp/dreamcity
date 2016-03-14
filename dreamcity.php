@@ -15,8 +15,11 @@ include( plugin_dir_path( __FILE__ ) . 'signup/signup.php');
 include( plugin_dir_path( __FILE__ ) . 'vendor/new-user-approve/new-user-approve.php');
 include( plugin_dir_path( __FILE__ ) . 'email/registration.php');
 
+include( plugin_dir_path( __FILE__ ) . 'include/funcs.php');
+include( plugin_dir_path( __FILE__ ) . 'include/classes/class.camp.php');
 
 include_once dirname( __FILE__ ).'/install/db_install.php';
+
 register_activation_hook( __FILE__,  array( 'dc_installer', 'dc_db_install' ) );
 
 //init 
