@@ -168,20 +168,20 @@ function my_login_logo() { ?>
     <style type="text/css">
         @font-face{
             font-family:'rf4000-bold';
-            src:url('http://www.dream-city.dk/fonts/4000-bold-webfont.eot');
+            src:url('http://dream-city.dk/fonts/4000-bold-webfont.eot');
             src:url('http://www.dream-city.dk/fonts/4000-bold-webfont.eot?#iefix') format('embedded-opentype'),
-            url('http://www.dream-city.dk/fonts/4000-bold-webfont.woff') format('woff'),
-            url('http://www.dream-city.dk/fonts/4000-bold-webfont.ttf') format('truetype');
+            url('http://dream-city.dk/fonts/4000-bold-webfont.woff') format('woff'),
+            url('http://dream-city.dk/fonts/4000-bold-webfont.ttf') format('truetype');
             font-weight:normal;
             font-style:normal;
         }
 
         @font-face{
             font-family:'rf4000';
-            src:url('http://www.dream-city.dk/fonts/4000-regular-webfont.eot');
-            src:url('http://www.dream-city.dk/fonts/4000-regular-webfont.eot?#iefix') format('embedded-opentype'),
-            url('http://www.dream-city.dk/fonts/4000-regular-webfont.woff') format('woff'),
-            url('http://www.dream-city.dk/fonts/4000-regular-webfont.ttf') format('truetype');
+            src:url('http://dream-city.dk/fonts/4000-regular-webfont.eot');
+            src:url('http://dream-city.dk/fonts/4000-regular-webfont.eot?#iefix') format('embedded-opentype'),
+            url('http://dream-city.dk/fonts/4000-regular-webfont.woff') format('woff'),
+            url('http://dream-city.dk/fonts/4000-regular-webfont.ttf') format('truetype');
             font-weight:400;
             font-style:normal;
         }
