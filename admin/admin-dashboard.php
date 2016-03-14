@@ -57,7 +57,6 @@ LEFT JOIN wp0_usermeta ON wp0_usermeta.user_id = wp0_users.ID WHERE wp0_usermeta
                 <th>Project Description</th>
                 <th>Project Construction</th>
                 <th>Workshop</th>
-
             </tr>
         </thead>
         <tbody>

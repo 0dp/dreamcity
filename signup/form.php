@@ -64,9 +64,6 @@ function dc_registration_form_fields() {
                 <input type="hidden" name="post_id" id="post_id" value="55" />
                 <?php wp_nonce_field( 'dc_camp_img', 'dc_camp_img_nonce' ); ?>
                 </p>
-                    
-
-
 					<label for="dc_user_project_construction"><?php _e('Does your project include any construction work? (If yes, please send a description and drawing/picture to illustrate your concept to bygdc@roskilde-festival.dk)'); ?></label>
 					<textarea rows="3" name="dc_user_project_construction" id="dc_user_project_construction" class="form-control" placeholder="Contruction Plans" type="text"></textarea>
 				</p>
@@ -76,7 +73,7 @@ function dc_registration_form_fields() {
 				<div class="checkbox">
 					<label>
 					    <input type="checkbox" name="optionsRadios" id="optionsRadios1" value="option1" >
-						Thursday ??. March @ 17.00-20-00
+						Thursday 17. March @ 17.00-20-00
 					</label>
 				</div>
 				<div class="checkbox">
