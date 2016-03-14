@@ -141,7 +141,7 @@ function dc_process_reg_form(){
 			$message = sprintf( 'Hey [%s]. We have reveiced your registration. Oncer we have reviewed it we will get back to you. \n\n Dream On', $camp->camp_name, ENT_QUOTES );
 			$subject = "Welcome to Dream City";
 			
-			wp_mail( $to, $subject, $message, dc_email_header() );
+			wp_mail( $to, $subject, $message, '' );
 			
 			//wp_redirect(home_url() . '?state=success'); exit;
 		}
