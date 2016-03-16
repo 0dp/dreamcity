@@ -13,7 +13,7 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 //Includes
 include( plugin_dir_path( __FILE__ ) . 'signup/signup.php');
 include( plugin_dir_path( __FILE__ ) . 'vendor/new-user-approve/new-user-approve.php');
-include( plugin_dir_path( __FILE__ ) . 'email/registration.php');
+//include( plugin_dir_path( __FILE__ ) . 'email/registration.php');
 
 include( plugin_dir_path( __FILE__ ) . 'include/funcs.php');
 include( plugin_dir_path( __FILE__ ) . 'include/classes/class.camp.php');
@@ -112,6 +112,12 @@ function dc_alert() {
             echo '<div class="alert alert-success alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Success!</strong> You have now applied for Dreamcity 2016</div>';
+            }
+        if ($state == 'error') { 
+              echo '<div class="alert alert-warning alert-dismissible" role="alert">
+             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+             <strong>Fail!</strong>Camp might already been registered. Check with your fellow dreamers</div>';
+
             }
     }
 
