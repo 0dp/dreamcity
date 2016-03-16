@@ -134,10 +134,9 @@ class DreamCityCamp
                 $mime = $_FILES['dc_camp_img']['type'];
 				$filesize = $_FILES['dc_camp_img']['size'];
 				$maxsizef = 524288;
-				
 				if($filesize > $maxsizef){
 					$Ok_image = false;
-					//$error_array[] = 'error size, max file size = 500 KB';
+					$error_array[] = 'error size, max file size = 500 KB';
 				}
 				
 				if(($mime != 'image/jpeg') && ($mime != 'image/jpg') && ($mime != 'image/png')){
@@ -147,7 +146,7 @@ class DreamCityCamp
 				
 				if( $Ok_image ){
 					$attach_id = media_handle_upload( 'dc_camp_img', $this->user_id );
-					$this->camp_imageURL = wp_get_attachment_url($attach_id);
+					$campIMG_url = wp_get_attachment_url($attach_id);
 				}
             }
 		}
@@ -158,11 +157,8 @@ class DreamCityCamp
 		global $wpdb;
 		$Ok = true;
 		$table_name = $wpdb->prefix . 'dc_camp';
-		//$wpdb->show_errors();
-
-		//echo '<pre>' . $this->user_id .'<br/>'. $this->camp_name .'<br/>'. $this->user_phone .'<br/>'. $this->camp_description .'<br/>'. $this->camp_participants .'<br/>'. $this->camp_construction .'<br/>ico'. $this->camp_iconURL .'<br/>img'. $this->camp_imageURL . '</pre>';
-		
-		$wpdb->insert( 
+		$wpdb->show_errors();
+		$Ok = $wpdb->insert( 
 		 		$table_name, 
                 array(
                     'user_id'                => $this->user_id,
@@ -176,18 +172,18 @@ class DreamCityCamp
                     'camp_registration_date' => current_time( 'mysql' )
                 ) 
             );		
-			
-		// if( !$Ok ){			
-  //           var_dump($Ok);	
-		// 	$wpdb->print_error(); 
-		// 	echo(" OHH SHIT! userid= ". $this->user_id);
-		// 	return false;
-		// }	
-
-        $this->camp_id = $wpdb->insert_id;
-		//echo $this->camp_id;
+			echo $this->user_id;
+            var_dump($Ok);	
+         $wpdb->print_error();
+		if( !$Ok ){
+			 
+			 echo(" OHH SHIT! ");
+			 return false;
+		}	
+         $this->camp_id = $wpdb->insert_id;
+		echo $this->camp_id;
 		// Insert workshop dates
-		// if( $this->camp_id > 0 ){
+		if( $this->camp_id > 0 ){
 			$table_name = $wpdb->prefix . 'dc_camp_meta';		
 			if( $this->camp_workshop1 != "" ){
 				$wpdb->insert( 
@@ -229,11 +225,11 @@ class DreamCityCamp
 					) 
 				);		
 			}
-		// }
-		// else{
-		// // 	// failed to store insert camp data.
-		//  	$Ok = false;
-		// }
+		}
+		else{
+		// 	// failed to store insert camp data.
+		 	$Ok = false;
+		}
 		
 		return $Ok;
 		
@@ -263,9 +259,7 @@ class DreamCityCamp
 		
 			if ( is_wp_error( $new_user_id ) ) {
 				$error_string = $new_user_id->get_error_message();
-				//echo '<div id="message" class="error"><p>' . $error_string . '</p></div>';
-				wp_redirect('http://dream-city.dk/test-side' . '?state=error', 200); exit; 		
-
+				echo '<div id="message" class="error"><p>' . $error_string . '</p></div>';
 				//echo "Failed to create user : ". $new_user_id;
 				$Ok = false;
 			}else{			
@@ -281,6 +275,4 @@ class DreamCityCamp
 		return $Ok;		
 	}
 }
-
-//add_action( 'init', 'AddCampToDatabase' );
 ?>
