@@ -1,5 +1,5 @@
 <?php
-
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 $dc_form_success;
 $dc_form_message;
 
@@ -28,13 +28,7 @@ function dc_registration_form_fields() {
 		<?php
 		}
 	?>	
-		<h3 class="dc_header"><?php _e('New Dreamer Registration'); ?></h3>
-		<p>
-			Only one person from your camp should sign up. You will be the contact person!<br/>
-			You'll receive a confirmation on email that we have received you application at which point we will evalutate it.<br/>
-			If your project is confirmed you will receive login credentials for the website.
-		</p>
- 
+		
 		<form id="dc_registration_form" class="dc_form" action="http://dream-city.dk/test-side/" method="POST" enctype="multipart/form-data">
 			<fieldset>
 				<p>
@@ -43,37 +37,52 @@ function dc_registration_form_fields() {
 				</p>
 				<p>
 					<label for="dc_user_first"><?php _e('First Name'); ?></label>
-					<input name="dc_user_first" id="dc_user_first" class="form-control" placeholder="First Name" type="text"/>
+					<input name="dc_user_first" id="dc_user_first" class="form-control required" placeholder="First Name" type="text"/>
 				</p>
 				<p>
 					<label for="dc_user_last"><?php _e('Last Name'); ?></label>
-					<input name="dc_user_last" id="dc_user_last" class="form-control" placeholder="Last Name" type="text"/>
+					<input name="dc_user_last" id="dc_user_last" class="form-control required" placeholder="Last Name" type="text"/>
 				</p>
 				<p>
 					<label for="dc_user_phone"><?php _e('Phone #'); ?></label>
-					<input name="dc_user_phone" id="dc_user_phone" placeholder="Phone Number" class="form-control" type="tel"/>
+					<input name="dc_user_phone" id="dc_user_phone" placeholder="Phone Number required" class="form-control" type="tel"/>
 				</p>
 				<p>
 					<label for="dc_user_camp_name"><?php _e('Camp Name / Project Title'); ?></label>
-					<input name="dc_user_camp_name" id="dc_user_camp_name" class="form-control" placeholder="Camp Name / Project Title" type="text"/>
+					<input name="dc_user_camp_name" id="dc_user_camp_name" class="form-control required" placeholder="Camp Name / Project Title" type="text"/>
 				</p>
 				<p>
 					<label for="dc_user_participants"><?php _e('How many people will participate in your camp/project'); ?></label>
-					<input name="dc_user_participants" id="dc_user_participants" class="form-control"  placeholder="Participants" type="text"/>
+					<input name="dc_user_participants" id="dc_user_participants" class="form-control required"  placeholder="Participants" type="text"/>
 				</p>
 				<p>
-					<label for="dc_user_project_desc"><?php _e('Project description - Include one sentence that describes your gift to Dream City 2016 (This will be used for press, website etc., in case you change your project to some degree, please send an updated description to dreamcity@roskilde-festival.dk)'); ?></label>
-					<textarea rows="3" name="dc_user_project_desc" id="dc_user_project_desc" class="form-control" placeholder="Project Description" type="text"></textarea>
-				</p>
+					<div style="font-weight: 700; color: #fff; font-family: 'rf4000'; font-size: 1.8rem;"><?php _e('Project description - This needs to include 4 topics from the Dream Up Wheel and the answers to the questions within the topics.'); ?></div></p>
 				<p>
-					<!-- Should we not have file submission here and/or have it sent to byg_dc? -->
+					<label for="dc_user_project_desc_one"><?php _e('Subject 1'); ?></label>
+					<textarea rows="3" name="dc_user_project_desc_one" id="dc_user_project_desc_one" class="form-control required" placeholder="1st. Topic from the Dream up Wheel" type="text"></textarea>
+				</p>
+			
+				<p>
+					<label for="dc_user_project_desc_two"><?php _e('Subject 2'); ?></label>
+					<textarea rows="3" name="dc_user_project_desc_two" id="dc_user_project_desc_two" class="form-control required" placeholder="2nd. Topic from the Dream up Wheel" type="text"></textarea>
+				</p>
+
+				<p>
+					<label for="dc_user_project_desc_three"><?php _e('Subject 3'); ?></label>
+					<textarea rows="3" name="dc_user_project_desc_three" id="dc_user_project_desc_three" class="form-control required" placeholder="3rd. Topic from the Dream up Wheel" type="text"></textarea>
+				</p>
+
+				<p>
+					<label for="dc_user_project_desc_four"><?php _e('Subject 4'); ?></label>
+					<textarea rows="3" name="dc_user_project_desc_four" id="dc_user_project_desc_four" class="form-control required" placeholder="4th. Topic from the Dream up Wheel" type="text"></textarea>
+				</p>
 
                 <p>
                 <label for="dc_camp_logo">
                     <?php _e('Camp Logo - Please upload your camps logo. 300x300px preferably, png or jpg, max file size is 500kb'); ?>
                 </label>
 
-                <input type="file" name="dc_camp_logo" id="dc_camp_logo"  multiple="false" />
+                <input type="file" name="dc_camp_logo" id="dc_camp_logo" class="form-control required" multiple="false" />
                 <input type="hidden" name="post_id" id="post_id" value="55" />
                 <?php wp_nonce_field( 'dc_camp_logo', 'dc_camp_logo_nonce' ); ?>
                 </p>
@@ -82,7 +91,7 @@ function dc_registration_form_fields() {
                     <?php _e('Camp Image - Please upload your camps Image. png or jpg, max file size is 500kb'); ?>
                 </label>
 
-                <input type="file" name="dc_camp_img" id="dc_camp_img"  multiple="false" />
+                <input type="file" name="dc_camp_img" id="dc_camp_img" class="form-control required" multiple="false" />
                 <input type="hidden" name="post_id" id="post_id" value="55" />
                 <?php wp_nonce_field( 'dc_camp_img', 'dc_camp_img_nonce' ); ?>
                 </p>
@@ -149,7 +158,7 @@ function dc_process_reg_form(){
 		$camp_phone     = $_POST["dc_user_phone"];
 		$camp_name      = $_POST["dc_user_camp_name"];
 		$camp_pat_no    = $_POST["dc_user_participants"];
-		$camp_pro_desc  = $_POST["dc_user_project_desc"];
+		$camp_pro_desc  = $_POST["dc_user_project_desc_one"] ."\r\n\r\n". $_POST["dc_user_project_desc_two"] ."\r\n\r\n". $_POST["dc_user_project_desc_three"] ."\r\n\r\n". $_POST["dc_user_project_desc_four"];
 		$camp_pro_cons  = $_POST["dc_user_project_construction"];
 
 		
@@ -179,7 +188,7 @@ function dc_process_reg_form(){
 			// send the newly created user to the home page after logging them in and add a confirmation message
 			
 			$to = $camp->user_email;
-			$message = sprintf( 'Hey [%s]. We have reveiced your registration. Oncer we have reviewed it we will get back to you. \n\n Dream On', $camp->camp_name, ENT_QUOTES );
+			$message = sprintf( "Hey %s. \r\nWe have received your registration. Once we have reviewed it we will get back to you. \r\r\n\n Dream On", $camp->camp_name, ENT_QUOTES );
 			$subject = "Welcome to Dream City";
 			
 			wp_mail( $to, $subject, $message, '' );
