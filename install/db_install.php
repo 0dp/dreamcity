@@ -1,7 +1,7 @@
 <?php
 
 global $dc_db_version;
-$dc_db_version = '1.0';
+$dc_db_version = '2.0';
 
 
 Class dc_installer {

@@ -1,5 +1,5 @@
 <?php
-
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 // Todo LSA; Move SQL come to other function place!
 
 class DreamCityCamp
@@ -55,8 +55,9 @@ class DreamCityCamp
 		$this->user_email = sanitize($aUserEmail);
 		$this->user_phone = sanitize($aUserPhone);
 		
-		$this->camp_name = sanitize($aCampName);
-		$this->camp_description = sanitize($aCampDescription);		
+		//$this->camp_name = sanitize($aCampName);
+		$this->camp_name = strip_tags($aCampName);		
+		$this->camp_description = sanitizeKeepNewline($aCampDescription);		
 		$this->camp_construction = sanitize($aCampConstruction);
 		$this->camp_participants = $aCampParticipants;
 
@@ -160,7 +161,7 @@ class DreamCityCamp
 		$table_name = $wpdb->prefix . 'dc_camp';
 		//$wpdb->show_errors();
 
-		//echo '<pre>' . $this->user_id .'<br/>'. $this->camp_name .'<br/>'. $this->user_phone .'<br/>'. $this->camp_description .'<br/>'. $this->camp_participants .'<br/>'. $this->camp_construction .'<br/>ico'. $this->camp_iconURL .'<br/>img'. $this->camp_imageURL . '</pre>';
+		// echo '<pre>' . $this->user_id .'<br/>'. $this->camp_name .'<br/>'. $this->user_phone .'<br/>desc:'. $this->camp_description .'<br/>'. $this->camp_participants .'<br/>'. $this->camp_construction .'<br/>ico'. $this->camp_iconURL .'<br/>img'. $this->camp_imageURL . '</pre>';
 		
 		$wpdb->insert( 
 		 		$table_name, 

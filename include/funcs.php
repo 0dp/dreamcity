@@ -34,4 +34,10 @@ function sanitize($str)
 	return strtolower(strip_tags(trim(($str))));
 }
 
+//Completely sanitizes text
+function sanitizeKeepNewline($str)
+{
+	return strtolower(strip_tags(trim($str, "\n\r")));
+}
+
 ?>
