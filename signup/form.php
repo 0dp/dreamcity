@@ -166,7 +166,8 @@ function dc_registration_form_fields() {
 				<p>
 					<div class="form-group">
 						<label for="dc_user_short_desc" data-validate="length">
-							<?php _e('Short project description/teaser for website in English'); ?>
+							<?php _e('Short project description/teaser for website in English (will be used for press, website etc., in case you change your project to some degree please
+send an updated description to dreamcity@roskilde-festival.dk) '); ?>
 						</label>
 						<div class="input-group" data-validate="length" data-length="10">
 							<textarea rows="3" name="dc_user_short_desc" id="dc_user_short_desc" class="form-control required" placeholder="4th. Topic from the Dream up Wheel" type="text" required></textarea>
