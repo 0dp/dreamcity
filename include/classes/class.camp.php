@@ -11,6 +11,7 @@ class DreamCityCamp
 	
 	private $camp_id = 0;    // Camp ID		
 	private $camp_description = "";
+	private $camp_short_desc = "";
 	private $camp_construction = "";
 	private $camp_participants = 0;
 	private $camp_url = "";
@@ -46,7 +47,7 @@ class DreamCityCamp
     public $success = array();
 	public $error_array = array();
 	
-	function __construct($aUserLogin, $aUserFirstName, $aUserLastName, $aUserEmail, $aUserPhone, $aCampName,$aCampDescription, $aCampConstruction, $aCampParticipants, $aWorkshop1, $aWorkshop2, $aWorkshop3, $aWorkshop4){
+	function __construct($aUserLogin, $aUserFirstName, $aUserLastName, $aUserEmail, $aUserPhone, $aCampName,$aCampDescription, $aCampConstruction, $aCampParticipants,$aCampShortDesc, $aWorkshop1, $aWorkshop2, $aWorkshop3, $aWorkshop4){
 								
         //Sanitize		
 		$this->user_login = sanitize($aUserLogin);
@@ -57,7 +58,8 @@ class DreamCityCamp
 		
 		//$this->camp_name = sanitize($aCampName);
 		$this->camp_name = strip_tags($aCampName);		
-		$this->camp_description = sanitizeKeepNewline($aCampDescription);		
+		$this->camp_description = sanitizeKeepNewline($aCampDescription);
+		$this->camp_short_desc = sanitizeKeepNewline($aCampShortDesc);		
 		$this->camp_construction = sanitize($aCampConstruction);
 		$this->camp_participants = $aCampParticipants;
 
@@ -166,15 +168,16 @@ class DreamCityCamp
 		$wpdb->insert( 
 		 		$table_name, 
                 array(
-                    'user_id'                => $this->user_id,
-                    'camp_name'              => $this->camp_name,
-                    'camp_phone'             => $this->user_phone,
-                    'camp_description'       => $this->camp_description,
-                    'camp_residents'         => $this->camp_participants,
-                    'camp_construction'      => $this->camp_construction,
-                    'camp_iconURL'           => $this->camp_iconURL,
-                    'camp_imageURL'          => $this->camp_imageURL,
-                    'camp_registration_date' => current_time( 'mysql' )
+                    'user_id'                    => $this->user_id,
+                    'camp_name'                  => $this->camp_name,
+                    'camp_phone'                 => $this->user_phone,
+                    'camp_short_description'	 => $this->camp_short_desc,
+                    'camp_description'           => $this->camp_description,
+                    'camp_residents'             => $this->camp_participants,
+                    'camp_construction'          => $this->camp_construction,
+                    'camp_iconURL'               => $this->camp_iconURL,
+                    'camp_imageURL'              => $this->camp_imageURL,
+                    'camp_registration_date'     => current_time( 'mysql' )
                 ) 
             );		
 			
