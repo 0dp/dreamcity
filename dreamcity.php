@@ -8,6 +8,8 @@ Version: 	 1.0.3
 Author URI:  https://github.com/0dp/
 License:     GPL-3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
+GitHub Plugin URI: https://github.com/0dp/dreamcity
+GitHub Branch:     master
 */
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 //Includes
