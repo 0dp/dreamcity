@@ -35,7 +35,7 @@ function dc_registration_form_fields() {
 		<style>
 		.input-group-addon.primary { color: rgb(255, 255, 255); background-color: rgb(50, 118, 177); border-color: rgb(40, 94, 142); } .input-group-addon.success { color: rgb(255, 255, 255); background-color: rgb(92, 184, 92); border-color: rgb(76, 174, 76); } .input-group-addon.info { color: rgb(255, 255, 255); background-color: rgb(57, 179, 215); border-color: rgb(38, 154, 188); } .input-group-addon.warning { color: rgb(255, 255, 255); background-color: rgb(240, 173, 78); border-color: rgb(238, 162, 54); } .input-group-addon.danger { color: rgb(255, 255, 255); background-color: rgb(217, 83, 79); border-color: rgb(212, 63, 58); }
 		</style>
-		<form id="dc_registration_form" class="dc_form" action="http://dream-city.dk/test-side/" method="POST" enctype="multipart/form-data">
+		<form id="dc_registration_form" class="dc_form" action="" method="POST" enctype="multipart/form-data">
 			<fieldset>
 				<p>
 					<div class="form-group">
@@ -163,6 +163,21 @@ function dc_registration_form_fields() {
 				</div>
 			</div>
 				</p>
+				<p>
+					<div class="form-group">
+						<label for="dc_user_short_desc" data-validate="length">
+							<?php _e('Short project description/teaser for website in English (will be used for press, website etc., in case you change your project to some degree please
+send an updated description to dreamcity@roskilde-festival.dk) '); ?>
+						</label>
+						<div class="input-group" data-validate="length" data-length="10">
+							<textarea rows="3" name="dc_user_short_desc" id="dc_user_short_desc" class="form-control required" placeholder="4th. Topic from the Dream up Wheel" type="text" required></textarea>
+							<span class="input-group-addon danger">
+								<span class="glyphicon glyphicon-remove">
+							</span>
+							</span> 
+						</div>
+					</div>
+				</p>
 
                 <p>
                 	<div class="form-group">
@@ -265,15 +280,16 @@ function dc_process_reg_form(){
 		$camp_workshop3 = "";
 		$camp_workshop4 = "";
 
-		$user_login     = $_POST["dc_user_email"];  
-		$user_email     = $_POST["dc_user_email"];
-		$user_first     = $_POST["dc_user_first"];
-		$user_last      = $_POST["dc_user_last"];
-		$camp_phone     = $_POST["dc_user_phone"];
-		$camp_name      = $_POST["dc_user_camp_name"];
-		$camp_pat_no    = $_POST["dc_user_participants"];
-		$camp_pro_desc  = $_POST["dc_user_project_desc_one"] ."\r\n\r\n". $_POST["dc_user_project_desc_two"] ."\r\n\r\n". $_POST["dc_user_project_desc_three"] ."\r\n\r\n". $_POST["dc_user_project_desc_four"];
-		$camp_pro_cons  = $_POST["dc_user_project_construction"];
+		$user_login      = $_POST["dc_user_email"];  
+		$user_email      = $_POST["dc_user_email"];
+		$user_first      = $_POST["dc_user_first"];
+		$user_last       = $_POST["dc_user_last"];
+		$camp_phone      = $_POST["dc_user_phone"];
+		$camp_name       = $_POST["dc_user_camp_name"];
+		$camp_pat_no     = $_POST["dc_user_participants"];
+		$camp_pro_desc   = $_POST["dc_user_project_desc_one"] ."\r\n\r\n". $_POST["dc_user_project_desc_two"] ."\r\n\r\n". $_POST["dc_user_project_desc_three"] ."\r\n\r\n". $_POST["dc_user_project_desc_four"];
+		$camp_pro_cons   = $_POST["dc_user_project_construction"];
+		$camp_short_desc = $_POST['dc_user_short_desc'];
 
 		
 		if( isset( $_POST["dc_optionsRadios1"]) )
@@ -285,7 +301,7 @@ function dc_process_reg_form(){
 		if( isset( $_POST["dc_optionsRadios4"] ))
 			$camp_workshop4 = $_POST["dc_optionsRadios4"];		
 		
-		$camp = new DreamCityCamp($user_login, $user_first, $user_last, $user_email, $camp_phone, $camp_name,$camp_pro_desc, $camp_pro_cons, $camp_pat_no, $camp_workshop1, $camp_workshop2, $camp_workshop3, $camp_workshop4);
+		$camp = new DreamCityCamp($user_login, $user_first, $user_last, $user_email, $camp_phone, $camp_name,$camp_pro_desc, $camp_pro_cons, $camp_pat_no, $camp_short_desc, $camp_workshop1, $camp_workshop2, $camp_workshop3, $camp_workshop4);
 		if( $camp->HasError() ){
 			$dc_form_success = "error";
 		}
