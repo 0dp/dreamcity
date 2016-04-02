@@ -4,7 +4,7 @@ Plugin Name: Dreamcity Medlems Plugin
 Plugin URI:  https://github.com/0dp/dreamcity
 Description: Medlemsmodul med ansøgning blah blah
 Author: 	 Johankat, Lars, Rasmus
-Version: 	 1.0.2
+Version: 	 1.0.3
 Author URI:  https://github.com/0dp/
 License:     GPL-3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -158,7 +158,12 @@ function my_login_redirect( $redirect_to, $request, $user ) {
         if ( in_array( 'administrator', $user->roles ) ) {
             // redirect them to the default place
             return $redirect_to;
-        } else {
+        } 
+        if ( in_array( 'dreamer', $user->roles ) ) {
+            // redirect them to the default place
+            return 'http://dream-city.dk/backstage-dreamer/';
+        }
+        else {
             return home_url();
         }
     } else {
@@ -275,3 +280,79 @@ add_filter('register','no_register_link');
 function no_register_link($url){
     return '';
 }
+
+
+
+
+   
+
+if(isset($_GET["page"]) && $_GET['page'] == "dreamcity/admin/admin-dashboard.php")
+{    
+    
+
+    global $plugin_page;
+    if ( isset($_POST['download_csv'])) {
+        global $wpdb;
+
+    $pending = $wpdb->get_results( 
+    "SELECT DISTINCT wp0_users.display_name, wp0_users.user_email, wp0_usermeta.*, wp0_dc_camp.*,wp0_dc_camp_meta.*
+    FROM wp0_dc_camp 
+    LEFT JOIN wp0_dc_camp_meta ON wp0_dc_camp.camp_id = wp0_dc_camp_meta.camp_id
+    LEFT JOIN wp0_users ON wp0_dc_camp.user_id = wp0_users.ID
+    LEFT JOIN wp0_usermeta ON wp0_usermeta.user_id = wp0_users.ID WHERE wp0_usermeta.meta_value = 'pending' GROUP BY wp0_users.ID
+    ");
+                                    
+        // Set header row values
+        $csv_fields=array();
+        $csv_fields[] = 'Camp Name';
+        $csv_fields[] = 'Contact Person';
+        $csv_fields[] = 'Email';
+        $csv_fields[] = 'Phone';
+        $csv_fields[] = 'Residents';
+        $csv_fields[] = 'Short Description';
+        $csv_fields[] = 'Project Description';
+        $csv_fields[] = 'Project Construction';
+        $csv_fields[] = 'Workshop';
+
+        $output_filename = 'pending_dreamers_export.csv';
+        $output_handle = @fopen( 'php://output', 'w' );
+     
+
+        header( 'Cache-Control: must-revalidate, post-check=0, pre-check=0' );
+        header( 'Content-Description: File Transfer' );
+        header( 'Content-type: text/csv; charset=iso-8859-1');
+        header( 'Content-Disposition: attachment; filename=' . $output_filename );
+        header( 'Expires: 0' );
+        header( 'Pragma: no-cache' ); 
+
+
+
+        // Insert header row
+        fputcsv( $output_handle, $csv_fields, ";", '"');
+
+        // Parse results to csv format
+        foreach ($pending as $Result) {
+            $leadArray = array();
+            $leadArray[] = utf8_decode($Result->camp_name);
+            $leadArray[] = utf8_decode($Result->display_name);
+            $leadArray[] = utf8_decode($Result->user_email);
+            $leadArray[] = utf8_decode($Result->camp_phone);
+            $leadArray[] = utf8_decode($Result->camp_residents);
+            $leadArray[] = utf8_decode($Result->camp_short_description);
+            $leadArray[] = utf8_decode($Result->camp_description);
+            $leadArray[] = utf8_decode($Result->camp_construction);
+            $leadArray[] = utf8_decode($Result->meta_value);
+            //echo var_dump($Result);
+            //$leadArray = (array) $Result; // Cast the Object to an array
+            // Add row to file
+            fputcsv( $output_handle, $leadArray, ";", '"');
+            }
+        
+        // Close output file stream
+        fclose( $output_handle ); 
+
+        die();
+    }
+
+}
+?>
