@@ -1,3 +1,6 @@
+1.0.4
+html mail
+
 1.0.3
 CSV export of pending dreamers
 Hardcoded html email for approved and denied
