@@ -301,7 +301,9 @@ function dc_process_reg_form(){
 		if( isset( $_POST["dc_optionsRadios4"] ))
 			$camp_workshop4 = $_POST["dc_optionsRadios4"];		
 		
-		$camp = new DreamCityCamp($user_login, $user_first, $user_last, $user_email, $camp_phone, $camp_name,$camp_pro_desc, $camp_pro_cons, $camp_pat_no, $camp_short_desc, $camp_workshop1, $camp_workshop2, $camp_workshop3, $camp_workshop4);
+		$camp = DreamCityCamp::withDetails($user_login, $user_first, $user_last, $user_email, $camp_phone, $camp_name,$camp_pro_desc, $camp_pro_cons, $camp_pat_no, $camp_short_desc, $camp_workshop1, $camp_workshop2, $camp_workshop3, $camp_workshop4);
+
+		//$camp = new DreamCityCamp($user_login, $user_first, $user_last, $user_email, $camp_phone, $camp_name,$camp_pro_desc, $camp_pro_cons, $camp_pat_no, $camp_short_desc, $camp_workshop1, //$camp_workshop2, $camp_workshop3, $camp_workshop4);
 		if( $camp->HasError() ){
 			$dc_form_success = "error";
 		}
@@ -330,7 +332,8 @@ function dc_process_reg_form(){
 			//return $dc_registration_form_fields;
 			
 			//wp_redirect('http://dream-city.dk/test-side' . '?state=success', 200); exit;
-			wp_redirect('http://dream-city.dk/become-a-dreamer/registration' . '?state=success', 200); exit;
+			//wp_redirect('http://dream-city.dk/become-a-dreamer/registration' . '?state=success', 200); exit;
+			wp_redirect('localhost/wordpress/become-a-dreamer/registration' . '?state=success', 200); exit;
 		}
 	}		
 }
