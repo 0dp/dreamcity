@@ -332,8 +332,8 @@ function dc_process_reg_form(){
 			//return $dc_registration_form_fields;
 			
 			//wp_redirect('http://dream-city.dk/test-side' . '?state=success', 200); exit;
-			//wp_redirect('http://dream-city.dk/become-a-dreamer/registration' . '?state=success', 200); exit;
-			wp_redirect('localhost/wordpress/become-a-dreamer/registration' . '?state=success', 200); exit;
+			wp_redirect('http://dream-city.dk/become-a-dreamer/registration' . '?state=success', 200); exit;
+			//wp_redirect('localhost/wordpress/become-a-dreamer/registration' . '?state=success', 200); exit;
 		}
 	}		
 }
