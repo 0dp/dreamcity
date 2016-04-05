@@ -571,11 +571,12 @@ class pw_new_user_approve {
 		
 
 		$camp = DreamCityCamp::withUserId($user_id);
-		
-		print_r($camp);
-
-		if( $camp != false )
-			dc_camp_update_notes($camp->camp_id, "Test note", false);
+				
+		if( $camp != false ){
+			$current_user = wp_get_current_user();
+			// if "append" is set to true, the function does not add note!
+    		dc_camp_update_notes($camp->camp_id, date("Y-m-d H:i:s") . " - denied by " . $current_user->display_name, false);
+		}
 
 		// change usermeta tag in database to denied
 		update_user_meta( $user->ID, 'pw_user_status', 'denied' );
