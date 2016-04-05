@@ -18,6 +18,7 @@ Change Log
   2016-04-05 LSA;   Made constructor private.
                     Made 2 static functions to construct class. "withUserId" and "withDetails"
                     Added "CampNotes" to "fill" function.
+                    Pushed into branch "new-camp-class"
 
 Review
   2016-04-05 JHK;   Reviewed
@@ -31,7 +32,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 class DreamCityCamp
 {   
-
     public $camp_name = ""; // Camp/project name        
     public $user_id = 0;    // Wordpress userID 
     public $user_email = "";
