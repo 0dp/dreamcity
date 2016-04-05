@@ -37,13 +37,20 @@ class DreamCityCamp
     public $user_email = "";
     
     private $camp_id = 0;    // Camp ID     
+    public $camp_description = "";
+    public $camp_short_desc = "";
+    public $camp_construction = "";
+    public $camp_participants = 0;
     private $camp_url = "";
     private $camp_imageURL = "";
     private $camp_iconURL = ""; 
     private $camp_notes = "";
+    public $camp_registration_date;
     private $camp_modified;
     
     private $user_login = "";
+    public $user_firstname = "";
+    public $user_lastname = "";
     private $user_phone = "";
     
     private $camp_workshop1 = "";
