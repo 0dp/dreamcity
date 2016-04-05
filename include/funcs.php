@@ -41,4 +41,38 @@ function sanitizeKeepNewline($str)
 }
 
 
+function dc_camp_update_notes($campid, $notes, $append = false )
+{
+
+    global $wpdb;
+    $Ok = true;
+
+    $new_notes = $notes;
+
+    $table_name = $wpdb->prefix . 'dc_camp';
+
+    if( $append )
+    {
+        $new_notes = $wpdb->get_var( $wpdb->prepare( "SELECT camp_notes FROM $table_name WHERE camp_id = %i", $campid) );
+
+        if( $new_notes != null ){
+            $new_notes = $new_notes. '\n' . $notes;
+        }
+    }
+
+    $result = $wpdb->update( 
+    $table_name, 
+    array(                          
+        'camp_notes' => $new_notes
+        ), 
+            array( 'camp_id' => $campid )
+    );
+
+    if( $result == false){
+        $Ok = false;
+    }
+
+    return $Ok;
+}
+
 ?>

@@ -567,6 +567,16 @@ class pw_new_user_approve {
 	public function update_deny_status( $user_id ) {
 		$user = new WP_User( $user_id );
 
+		// Get dream city camp info.
+		
+
+		$camp = DreamCityCamp::withUserId($user_id);
+		
+		print_r($camp);
+
+		if( $camp != false )
+			dc_camp_update_notes($camp->camp_id, "Test note", false);
+
 		// change usermeta tag in database to denied
 		update_user_meta( $user->ID, 'pw_user_status', 'denied' );
 

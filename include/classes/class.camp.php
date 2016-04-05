@@ -36,7 +36,7 @@ class DreamCityCamp
     public $user_id = 0;    // Wordpress userID 
     public $user_email = "";
     
-    private $camp_id = 0;    // Camp ID     
+    public $camp_id = 0;    // Camp ID     
     public $camp_description = "";
     public $camp_short_desc = "";
     public $camp_construction = "";
@@ -115,7 +115,7 @@ class DreamCityCamp
         }
 
         $table_name = $wpdb->prefix . 'dc_camp';
-        $query = $wpdb->prepare( "SELECT * FROM $table_name WHERE user_id = %i", $aUserId);                
+        $query = $wpdb->prepare( "SELECT * FROM ". $table_name." WHERE user_id = %d", $aUserId);
         $campdata = $wpdb->get_row( $query );
 
         
@@ -125,10 +125,10 @@ class DreamCityCamp
             //$query = $wpdb->prepare( "SELECT * FROM $table_name WHERE camp_id = %i", $campdata->camp_id);                
             //$workshops =  $wpdb->get_results( $query );
 
-            $ws1 = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM $table_name WHERE camp_id = %i AND meta_key = 'camp_workshop1'", $campdata->camp_id) );
-            $ws2 = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM $table_name WHERE camp_id = %i AND meta_key = 'camp_workshop2'", $campdata->camp_id) );
-            $ws3 = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM $table_name WHERE camp_id = %i AND meta_key = 'camp_workshop3'", $campdata->camp_id) );
-            $ws4 = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM $table_name WHERE camp_id = %i AND meta_key = 'camp_workshop4'", $campdata->camp_id) );
+            $ws1 = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM $table_name WHERE camp_id = %d AND meta_key = 'camp_workshop1'", $campdata->camp_id) );
+            $ws2 = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM $table_name WHERE camp_id = %d AND meta_key = 'camp_workshop2'", $campdata->camp_id) );
+            $ws3 = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM $table_name WHERE camp_id = %d AND meta_key = 'camp_workshop3'", $campdata->camp_id) );
+            $ws4 = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM $table_name WHERE camp_id = %d AND meta_key = 'camp_workshop4'", $campdata->camp_id) );
 
             if($ws1 == NULL)
                 $ws1 = "";
@@ -142,7 +142,7 @@ class DreamCityCamp
             if($ws4 == NULL)
                 $ws4 = "";
 
-            fill($user_info->user_login, $user_info->first_name, $user_info->last_name, $user_info->user_email, $campdata->camp_phone, $campdata,$camp_description, $campdata->camp_construction, $campdata->camp_residents,$campdata->camp_short_description, $ws1, $ws2, $ws3, $ws4, $campdata->camp_notes);
+            $this->fill($user_info->user_login, $user_info->first_name, $user_info->last_name, $user_info->user_email, $campdata->camp_phone, $campdata->camp_description, $campdata->camp_construction, $campdata->camp_residents,$campdata->camp_short_description, $ws1, $ws2, $ws3, $ws4, $campdata->camp_notes);
 
             $this->camp_id = $campdata->camp_id;
 
