@@ -552,6 +552,11 @@ class pw_new_user_approve {
 
 		// send the mail
 		wp_mail( $user_email, $subject, $message, $this->email_message_headers() );
+
+		//delete user and project 
+		//
+		//wp_delete_user( $user_id );
+
 	}
 
 	/**

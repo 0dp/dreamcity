@@ -51,7 +51,7 @@ a dreamer, about the building process and the clean up day and much more importa
 </p>
 <h3>Any questions?</h3>
 <p>If you have any questions to this e-mail or other things about Dream City don’t hesitate to ask them
-at facebook or write us an email at dream-city@roskilde-festival.dk.
+at facebook or write us an email at dreamcity@roskilde-festival.dk.
 It’s so exciting to see what we all together Dream Up for this years Dream City!
 </p>';
 
@@ -89,7 +89,7 @@ what to do and not to do in Dream City and much more important stuff on the webs
 </p>
 <h3>Any questions?</h3>
 <p>If you have any questions to this e-mail or other things about Dream City don’t hesitate to ask them
-at <a href="https://www.facebook.com/dreamcity.roskildefestival/">Facebook Dream City - Roskilde Festival</a> or write us an email at Dream-city@roskilde-festival.dk.</p>
+at <a href="https://www.facebook.com/dreamcity.roskildefestival/">Facebook Dream City - Roskilde Festival</a> or write us an email at dreamcity@roskilde-festival.dk.</p>
 <br></br>
 It’s so exciting to see what we all together Dream Up for this years Dream City!
 <p>Best Regards, Dream City</p>';
