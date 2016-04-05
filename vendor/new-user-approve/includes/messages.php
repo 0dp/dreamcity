@@ -75,6 +75,7 @@ correct and submit a new registration. The reason why your registration can’t 
 due to one or more of the following issues:
 </p>
 <ul>
+	<li>You’re missing to write an English camp description.</li>
     <li>You’ve missed to explain one or more of the 4 topics from the Dream Up Wheel.</li>
     <li>You didn’t upload a camp image. Your camp image is your camps official look to the public – the
 image or picture will be used in the dreamer album on the website.</li>
