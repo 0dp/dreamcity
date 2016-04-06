@@ -170,7 +170,7 @@ function dc_registration_form_fields() {
 send an updated description to dreamcity@roskilde-festival.dk) '); ?>
 						</label>
 						<div class="input-group" data-validate="length" data-length="10">
-							<textarea rows="3" name="dc_user_short_desc" id="dc_user_short_desc" class="form-control required" placeholder="4th. Topic from the Dream up Wheel" type="text" required></textarea>
+							<textarea rows="3" name="dc_user_short_desc" id="dc_user_short_desc" class="form-control required" placeholder="Short camp description" type="text" required></textarea>
 							<span class="input-group-addon danger">
 								<span class="glyphicon glyphicon-remove">
 							</span>
@@ -347,8 +347,9 @@ function dc_process_reg_form(){
 				$to = $camp->user_email;
 				$message = sprintf( "Hey %s. \r\nWe have received your registration. Once we have reviewed it we will get back to you. \r\r\n\n Dream On", $camp->camp_name, ENT_QUOTES );
 				$subject = "Welcome to Dream City";
-				
-				wp_mail( $to, $subject, $message, '' );
+				$att = create_pdf();
+
+				wp_mail( $to, $subject, $message, '', $att );
 				
 				//$Ok = true;
 				
