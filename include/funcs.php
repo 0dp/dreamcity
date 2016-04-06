@@ -1,6 +1,6 @@
 <?php
 
-function create_pdf() {
+function create_pdf($campdata) {
 
     // create new PDF document
     $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -33,25 +33,23 @@ function create_pdf() {
     $pdf->AddPage();
 
 // Set some content to print
-    $html = <<<EOD
-<h1>Dear Dreamer</h1>
+    $html = 
+"<h1>Dear Dreamer</h1>
 <i>Here is a Copy of your previous application</i>
-<p></p>
-$camp_description;
-$camp_short_desc;
-$camp_construction;
-$camp_participants;
-$camp_registration_date;
-EOD;
+<p></p>" . "<br/>" .
+$campdata->$camp_description . "<br/>" .
+$campdata->$camp_short_desc . "<br/>" .
+$campdata->$camp_construction . "<br/>" .
+$campdata->$camp_participants . "<br/>" .
+$campdata->$camp_registration_date;
+
 
 // Print text using writeHTMLCell()
     $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
 
 // Close and output PDF document
 // This method has several options, check the source code documentation for more information.
-    $data = $pdf->Output('application.pdf', 'E');
-
-    return $data;
+    $pdf->Output('application.pdf', 'I');
 }
 
 
