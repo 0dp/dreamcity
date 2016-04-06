@@ -305,7 +305,14 @@ function dc_process_reg_form(){
 
 		$camp = DreamCityCamp::withDetails($user_login, $user_first, $user_last, $user_email, $camp_phone, $camp_name,$camp_pro_desc, $camp_pro_cons, $camp_pat_no, $camp_short_desc, $camp_workshop1, $camp_workshop2, $camp_workshop3, $camp_workshop4);
 
-		//$camp = new DreamCityCamp($user_login, $user_first, $user_last, $user_email, $camp_phone, $camp_name,$camp_pro_desc, $camp_pro_cons, $camp_pat_no, $camp_short_desc, $camp_workshop1, //$camp_workshop2, $camp_workshop3, $camp_workshop4);
+
+		$email_inuse = email_exists($camp->user_email);
+		$user_status = get_user_meta( $user_id, 'pw_user_status', true );
+		if ( empty( $user_status ) ) {
+			$user_status = 'approved';
+		}
+		
+        
 		if( $camp->HasError() ){
 			$dc_form_success = "error";
 			$Ok = false;

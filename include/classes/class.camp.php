@@ -409,8 +409,6 @@ class DreamCityCamp
               'user_registered' => date('Y-m-d H:i:s'),
               'role'        => 'dreamer'
             ));
-
-            if( is_wp_error( $new_user_id ) && $new_user_id->get_error_code() ==  ) 
         
             if ( is_wp_error( $new_user_id ) ) {
                 $error_string = $new_user_id->get_error_message();
