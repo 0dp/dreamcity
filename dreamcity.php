@@ -4,7 +4,7 @@ Plugin Name: Dreamcity Medlems Plugin
 Plugin URI:  https://github.com/0dp/dreamcity
 Description: Medlemsmodul med ansøgning blah blah
 Author: 	 Johankat, Lars, Rasmus
-Version: 	 1.0.8
+Version: 	 1.0.9
 Author URI:  https://github.com/0dp/
 License:     GPL-3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -19,6 +19,9 @@ include( plugin_dir_path( __FILE__ ) . 'vendor/new-user-approve/new-user-approve
 
 include( plugin_dir_path( __FILE__ ) . 'include/funcs.php');
 include( plugin_dir_path( __FILE__ ) . 'include/classes/class.camp.php');
+
+include( plugin_dir_path( __FILE__ ) . 'vendor/tcpdf/tcpdf.php');
+include( plugin_dir_path( __FILE__ ) . 'vendor/tcpdf/examples/tcpdf_include.php');
 
 include_once dirname( __FILE__ ).'/install/db_install.php';
 

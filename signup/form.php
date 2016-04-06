@@ -324,10 +324,10 @@ function dc_process_reg_form(){
 			$Ok = false;
 		}
 		else{
-		
 			if( $email_inuse && $user_status == 'denied' ){	
 				$camp->user_id = $email_inuse;
 				$camp_old_data = DreamCityCamp::withUserId($camp->user_id);
+				
 				$camp->camp_id = $camp_old_data->camp_id;
 				$camp->camp_notes = $camp_old_data->camp_notes;
 
