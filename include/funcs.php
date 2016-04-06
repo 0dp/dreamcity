@@ -53,7 +53,7 @@ function dc_camp_update_notes($campid, $notes, $append = false )
 
     if( $append )
     {
-        $new_notes = $wpdb->get_var( $wpdb->prepare( "SELECT camp_notes FROM $table_name WHERE camp_id = %i", $campid) );
+        $new_notes = $wpdb->get_var( $wpdb->prepare( "SELECT camp_notes FROM $table_name WHERE camp_id = %d", $campid) );
 
         if( $new_notes != null ){
             $new_notes = $new_notes. '\n' . $notes;

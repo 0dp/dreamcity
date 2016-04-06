@@ -575,7 +575,7 @@ class pw_new_user_approve {
 		if( $camp != false ){
 			$current_user = wp_get_current_user();
 			// if "append" is set to true, the function does not add note!
-    		dc_camp_update_notes($camp->camp_id, date("Y-m-d H:i:s") . " - denied by " . $current_user->display_name, false);
+    		dc_camp_update_notes($camp->camp_id, date("Y-m-d H:i:s") . " - denied by " . $current_user->display_name, true);
 		}
 
 		// change usermeta tag in database to denied
