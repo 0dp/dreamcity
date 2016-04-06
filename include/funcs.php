@@ -37,11 +37,11 @@ function create_pdf($campdata) {
 "<h1>Dear Dreamer</h1>
 <i>Here is a Copy of your previous application</i>
 <p></p>" . "<br/>" .
-$campdata->$camp_description . "<br/>" .
-$campdata->$camp_short_desc . "<br/>" .
-$campdata->$camp_construction . "<br/>" .
-$campdata->$camp_participants . "<br/>" .
-$campdata->$camp_registration_date;
+$campdata->camp_description . "<br/>" .
+$campdata->camp_short_desc . "<br/>" .
+$campdata->camp_construction . "<br/>" .
+$campdata->camp_participants . "<br/>" .
+$campdata->camp_registration_date;
 
 
 // Print text using writeHTMLCell()
