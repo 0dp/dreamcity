@@ -418,8 +418,8 @@ class DreamCityCamp
                 $error_string = $new_user_id->get_error_message();
                 //echo '<div id="message" class="error"><p>' . $error_string . '</p></div>';
                 //wp_redirect('http://dream-city.dk/test-side' . '?state=error', 200); exit;
-                //wp_redirect('http://dream-city.dk/become-a-dreamer/registration' . '?state=error', 200); exit;
-                wp_redirect('http://localhost/wordpress/become-a-dreamer/registration' . '?state=error', 200); exit;
+                wp_redirect('http://dream-city.dk/become-a-dreamer/registration' . '?state=error', 200); exit;
+                //wp_redirect('http://localhost/wordpress/become-a-dreamer/registration' . '?state=error', 200); exit;
                 //echo "Failed to create user : ". $new_user_id;
                 $Ok = false;
             }else{          

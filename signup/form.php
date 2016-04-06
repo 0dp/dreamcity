@@ -25,8 +25,8 @@ function dc_registration_form_fields() {
             <strong>Fail!</strong>Your registration is not valid</div> -->
             			<?php 
 							//wp_redirect('http://dream-city.dk/test-side' . '?state=error', 200); exit; 
-							//wp_redirect('http://dream-city.dk/become-a-dreamer/registration' . '?state=error', 200); 
-							wp_redirect('http://localhost/wordpress/become-a-dreamer/registration' . '?state=error', 200); 
+							wp_redirect('http://dream-city.dk/become-a-dreamer/registration' . '?state=error', 200); 
+							//wp_redirect('http://localhost/wordpress/become-a-dreamer/registration' . '?state=error', 200); 
 							exit; 							
 						?>		
 
@@ -355,9 +355,9 @@ function dc_process_reg_form(){
 				$to = $camp->user_email;
 				$message = sprintf( "Hey %s. \r\nWe have received your registration. Once we have reviewed it we will get back to you. \r\r\n\n Dream On", $camp->camp_name, ENT_QUOTES );
 				$subject = "Welcome to Dream City";
-				//$att = create_pdf();
+				$att = create_pdf();
 
-				//wp_mail( $to, $subject, $message, '', $att );
+				wp_mail( $to, $subject, $message, '', $att );
 				//wp_mail( $to, $subject, $message, '' );
 				
 				//$Ok = true;
@@ -367,8 +367,8 @@ function dc_process_reg_form(){
 				//return $dc_registration_form_fields;
 				
 				//wp_redirect('http://dream-city.dk/test-side' . '?state=success', 200); exit;
-				//wp_redirect('http://dream-city.dk/become-a-dreamer/registration' . '?state=success', 200); exit;
-				wp_redirect('http://localhost/wordpress/become-a-dreamer/registration' . '?state=success', 200); exit;
+				wp_redirect('http://dream-city.dk/become-a-dreamer/registration' . '?state=success', 200); exit;
+				//wp_redirect('http://localhost/wordpress/become-a-dreamer/registration' . '?state=success', 200); exit;
 			}
 		}
 	}		
