@@ -49,7 +49,7 @@ $campdata->$camp_registration_date;
 
 // Close and output PDF document
 // This method has several options, check the source code documentation for more information.
-    $pdf->Output('application.pdf', 'I');
+    $pdf->Output('application.pdf', 'E');
 }
 
 
