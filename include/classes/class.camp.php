@@ -267,15 +267,15 @@ class DreamCityCamp
         }
     }   
     
-    public function UpdateCamp(){
+    public function UpdateCampOnUserId(){
         global $wpdb;
         $Ok = true;
 
-        $table_name = $wpdb->prefix . 'dc_camp';
-
         $this->AddCampImageData();
 
-        $restul = $wpdb->update( 
+        $table_name = $wpdb->prefix . 'dc_camp';
+
+        $result = $wpdb->update( 
             $table_name, 
             array(                    
                     'camp_name'                  => $this->camp_name,
@@ -289,10 +289,14 @@ class DreamCityCamp
                     'camp_imageURL'              => $this->camp_imageURL,
                     'camp_modified'              => current_time( 'mysql' )
             ), 
-            array( 'camp_id' => $this->camp_id )
+            array( 'user_id' => $this->user_id ),
+            array( '%s', '%s', '%s','%s','%d', '%s', '%s','%s','%s', '%s' ), 
+            array( '%d' )
+
         );
 
         if( $result == false){
+            
             $Ok = false;
         }
 
@@ -414,7 +418,8 @@ class DreamCityCamp
                 $error_string = $new_user_id->get_error_message();
                 //echo '<div id="message" class="error"><p>' . $error_string . '</p></div>';
                 //wp_redirect('http://dream-city.dk/test-side' . '?state=error', 200); exit;
-                wp_redirect('http://dream-city.dk/become-a-dreamer/registration' . '?state=error', 200); exit;
+                //wp_redirect('http://dream-city.dk/become-a-dreamer/registration' . '?state=error', 200); exit;
+                wp_redirect('http://localhost/wordpress/become-a-dreamer/registration' . '?state=error', 200); exit;
                 //echo "Failed to create user : ". $new_user_id;
                 $Ok = false;
             }else{          

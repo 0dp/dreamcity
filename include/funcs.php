@@ -110,21 +110,26 @@ function dc_camp_update_notes($campid, $notes, $append = false )
     {
         $new_notes = $wpdb->get_var( $wpdb->prepare( "SELECT camp_notes FROM $table_name WHERE camp_id = %d", $campid) );
 
-        if( $new_notes != null ){
-            $new_notes = $new_notes. '\n' . $notes;
+        if( $new_notes != NULL ){
+            $new_notes = $new_notes. "\n" . $notes;
+        }else{
+            $new_notes = $notes;
         }
     }
 
     $result = $wpdb->update( 
-    $table_name, 
-    array(                          
-        'camp_notes' => $new_notes
+        $table_name, 
+        array(                          
+            'camp_notes' => $new_notes
         ), 
-            array( 'camp_id' => $campid )
+        array( 'camp_id' => $campid ),
+        array( '%s' ),
+        array( '%d' )
     );
 
     if( $result == false){
         $Ok = false;
+
     }
 
     return $Ok;
