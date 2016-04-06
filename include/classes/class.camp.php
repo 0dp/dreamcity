@@ -44,7 +44,7 @@ class DreamCityCamp
     private $camp_url = "";
     private $camp_imageURL = "";
     private $camp_iconURL = ""; 
-    private $camp_notes = "";
+    public $camp_notes = "";
     public $camp_registration_date;
     private $camp_modified;
     
@@ -273,6 +273,8 @@ class DreamCityCamp
 
         $table_name = $wpdb->prefix . 'dc_camp';
 
+        $this->AddCampImageData();
+
         $restul = $wpdb->update( 
             $table_name, 
             array(                    
@@ -285,7 +287,6 @@ class DreamCityCamp
                     'camp_construction'          => $this->camp_construction,
                     'camp_iconURL'               => $this->camp_iconURL,
                     'camp_imageURL'              => $this->camp_imageURL,
-                    'camp_registration_date'     => current_time( 'mysql' ),
                     'camp_modified'              => current_time( 'mysql' )
             ), 
             array( 'camp_id' => $this->camp_id )
@@ -294,6 +295,8 @@ class DreamCityCamp
         if( $result == false){
             $Ok = false;
         }
+
+        // Next update the four workshops.
 
         return $Ok;
     }

@@ -271,6 +271,7 @@ function dc_process_reg_form(){
 	
 	global $dc_form_success;
 	
+	$Ok = true;
 	$dc_form_success = "";
 	
 	if (isset( $_POST["dc_user_email"] ) && isset( $_POST["dc_register_nonce"] ) && wp_verify_nonce($_POST['dc_register_nonce'], 'dc-register-nonce')) 
@@ -300,18 +301,41 @@ function dc_process_reg_form(){
 			$camp_workshop3 = $_POST["dc_optionsRadios3"];
 		if( isset( $_POST["dc_optionsRadios4"] ))
 			$camp_workshop4 = $_POST["dc_optionsRadios4"];		
-		
+
+
 		$camp = DreamCityCamp::withDetails($user_login, $user_first, $user_last, $user_email, $camp_phone, $camp_name,$camp_pro_desc, $camp_pro_cons, $camp_pat_no, $camp_short_desc, $camp_workshop1, $camp_workshop2, $camp_workshop3, $camp_workshop4);
 
-		//$camp = new DreamCityCamp($user_login, $user_first, $user_last, $user_email, $camp_phone, $camp_name,$camp_pro_desc, $camp_pro_cons, $camp_pat_no, $camp_short_desc, $camp_workshop1, //$camp_workshop2, $camp_workshop3, $camp_workshop4);
+
+		$email_inuse = email_exists($camp->user_email);
+		$user_status = get_user_meta( $user_id, 'pw_user_status', true );
+		if ( empty( $user_status ) ) {
+			$user_status = 'approved';
+		}
+		
+        
 		if( $camp->HasError() ){
 			$dc_form_success = "error";
+			$Ok = false;
 		}
-		else if( !$camp->AddCampToDatabase() ){			
-			// Show an error?
-			$dc_form_success = "error";			
-		}else{
-			
+		else{
+		
+			if( $email_inuse && $user_status == 'denied' ){	 
+				$camp->$user_id = $email_inuse;
+				$camp_old_data = DreamCityCamp::withUserId($camp->$user_id);
+				$camp->camp_notes = $camp_old_data->camp_notes;
+				if( !$camp->UpdateCamp() ){
+					$dc_form_success = "error";	
+					$Ok = false;
+				}else{
+					dc_camp_update_notes($camp->camp_id, date("Y-m-d H:i:s") . " - Camp reaplied", true);
+					update_user_meta( $camp->$user_id, 'pw_user_status', 'pending' );
+				}
+        	}
+			else if( !$camp->AddCampToDatabase() ){	// This will reject if user already exist! as this will try to create new camp.		
+				// Show an error?
+				$dc_form_success = "error";		
+				$Ok = false;
+			}	
 			//wp_new_user_notification($camp->user_id,'', 'both'); 
 			// log the new user in
 			//wp_setcookie($user_login, $user_pass, true);
@@ -319,21 +343,23 @@ function dc_process_reg_form(){
 			//do_action('wp_login', $user_login); 
 			// send the newly created user to the home page after logging them in and add a confirmation message
 			
-			$to = $camp->user_email;
-			$message = sprintf( "Hey %s. \r\nWe have received your registration. Once we have reviewed it we will get back to you. \r\r\n\n Dream On", $camp->camp_name, ENT_QUOTES );
-			$subject = "Welcome to Dream City";
-			
-			wp_mail( $to, $subject, $message, '' );
-			
-			//$Ok = true;
-			
-			$dc_form_success = "success";
+			if ( $Ok ){
+				$to = $camp->user_email;
+				$message = sprintf( "Hey %s. \r\nWe have received your registration. Once we have reviewed it we will get back to you. \r\r\n\n Dream On", $camp->camp_name, ENT_QUOTES );
+				$subject = "Welcome to Dream City";
+				
+				wp_mail( $to, $subject, $message, '' );
+				
+				//$Ok = true;
+				
+				$dc_form_success = "success";
 
-			//return $dc_registration_form_fields;
-			
-			//wp_redirect('http://dream-city.dk/test-side' . '?state=success', 200); exit;
-			wp_redirect('http://dream-city.dk/become-a-dreamer/registration' . '?state=success', 200); exit;
-			//wp_redirect('localhost/wordpress/become-a-dreamer/registration' . '?state=success', 200); exit;
+				//return $dc_registration_form_fields;
+				
+				//wp_redirect('http://dream-city.dk/test-side' . '?state=success', 200); exit;
+				wp_redirect('http://dream-city.dk/become-a-dreamer/registration' . '?state=success', 200); exit;
+				//wp_redirect('localhost/wordpress/become-a-dreamer/registration' . '?state=success', 200); exit;
+			}
 		}
 	}		
 }
