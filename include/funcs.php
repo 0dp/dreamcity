@@ -54,7 +54,10 @@ $campdata->camp_registration_date;
     //$data = $pdf->Output('application.pdf', 'E');
 
     $fileatt = $pdf->Output('application.pdf', 'E');
-    $data = chunk_split($fileatt);
+    
+    $data = array($fileatt);
+
+    //$data = chunk_split($fileatt);
 /*
     //$fileatt = "./test.pdf";
 
