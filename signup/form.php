@@ -355,7 +355,9 @@ function dc_process_reg_form(){
 				$to = $camp->user_email;
 				$message = sprintf( "Hey %s. \r\nWe have received your registration. Once we have reviewed it we will get back to you. \r\r\n\n Dream On", $camp->camp_name, ENT_QUOTES );
 				$subject = "Welcome to Dream City";
+				
 				$att = create_pdf($camp);
+
 
 				wp_mail( $to, $subject, $message, '', $att );
 				//wp_mail( $to, $subject, $message, '' );
