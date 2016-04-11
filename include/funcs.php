@@ -51,7 +51,24 @@ $campdata->camp_registration_date;
 
 // Close and output PDF document
 // This method has several options, check the source code documentation for more information.
-    $data = $pdf->Output('application.pdf', 'E');
+    //$data = $pdf->Output('application.pdf', 'E');
+
+    $data = $pdf->Output('application.pdf', 'S');
+    
+    //$data = array($fileatt);
+
+    //$data = chunk_split($fileatt);
+/*
+    //$fileatt = "./test.pdf";
+
+    $fileatttype = "application/pdf";
+    $fileattname = "newname.pdf";
+
+    $file = fopen($fileatt, 'rb');
+    $data = fread($file, filesize($fileatt));
+
+    fclose($file);
+*/
     return $data;
 }
 

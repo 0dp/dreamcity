@@ -58,6 +58,8 @@ LEFT JOIN wp0_usermeta ON wp0_usermeta.user_id = wp0_users.ID WHERE wp0_usermeta
                 <th>Project Description</th>
                 <th>Project Construction</th>
                 <th>Workshop</th>
+                <th>reg</th>
+                <th>updated</th>
             </tr>
         </thead>
         <tbody>
@@ -72,6 +74,8 @@ LEFT JOIN wp0_usermeta ON wp0_usermeta.user_id = wp0_users.ID WHERE wp0_usermeta
                 <td><?php echo $row->camp_description; ?></td>
                 <td><?php echo $row->camp_construction; ?></td>
                 <td><?php echo $row->meta_value; ?></td>
+                <td><?php echo $row->camp_registration_date; ?></td>
+                <td><?php echo $row->camp_modified; ?></td>
             </tr>
             <?php } ?>
         </tbody>
@@ -120,6 +124,8 @@ LEFT JOIN wp0_usermeta ON wp0_usermeta.user_id = wp0_users.ID WHERE wp0_usermeta
                 <th>Project Description</th>
                 <th>Project Construction</th>
                 <th>Workshop</th>
+                <th>reg</th>
+                <th>updated</th>
 
             </tr>
         </thead>
@@ -134,6 +140,8 @@ LEFT JOIN wp0_usermeta ON wp0_usermeta.user_id = wp0_users.ID WHERE wp0_usermeta
                 <td><?php echo $row->camp_description; ?></td>
                 <td><?php echo $row->camp_construction; ?></td>
                 <td><?php echo $row->meta_value; ?></td>
+                <td><?php echo $row->camp_registration_date; ?></td>
+                <td><?php echo $row->camp_modified; ?></td>
             </tr>
             <?php } ?>
         </tbody>

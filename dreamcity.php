@@ -4,7 +4,7 @@ Plugin Name: Dreamcity Medlems Plugin
 Plugin URI:  https://github.com/0dp/dreamcity
 Description: Medlemsmodul med ansøgning blah blah
 Author: 	 Johankat, Lars, Rasmus
-Version: 	 1.0.10
+Version: 	 1.0.15
 Author URI:  https://github.com/0dp/
 License:     GPL-3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -110,7 +110,7 @@ function dc_admin_reg() {
 function dc_alert() {
 
     //CHECK STATE
-    if ( isset( $_GET['state'] ) ) {
+    if ( isset( $_GET['state'] ) ) { 
         $state = $_GET['state'];
         //IF SUCCESS
         if ($state == 'success') { 
@@ -125,8 +125,7 @@ function dc_alert() {
 
             }
     }
-
-   
+ 
 }
 
 // ADD ACTIONS

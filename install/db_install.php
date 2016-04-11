@@ -1,7 +1,7 @@
 <?php
 
 global $dc_db_version;
-$dc_db_version = '3.0';
+$dc_db_version = '4.0';
 
 
 Class dc_installer {
@@ -27,9 +27,9 @@ Class dc_installer {
 			camp_short_description text NOT NULL,
 			camp_description text NOT NULL,
 			camp_construction text NULL,
-			camp_url varchar(70) DEFAULT '' NULL,
-			camp_imageURL varchar(100) DEFAULT '' NULL,
-			camp_iconURL varchar(100) DEFAULT '' NULL,
+			camp_url text() DEFAULT '' NULL,
+			camp_imageURL text() DEFAULT '' NULL,
+			camp_iconURL text() DEFAULT '' NULL,
 			camp_residents smallint(9) DEFAULT 0 NOT NULL,
 			camp_notes text DEFAULT NULL,
 			camp_registration_date datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,

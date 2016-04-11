@@ -19,6 +19,8 @@ Change Log
                     Made 2 static functions to construct class. "withUserId" and "withDetails"
                     Added "CampNotes" to "fill" function.
                     Pushed into branch "new-camp-class"
+                    
+  2016-04-10 JHK;   Update transients on Updatecamp
 
 Review
   2016-04-05 JHK;   Reviewed
@@ -268,6 +270,8 @@ class DreamCityCamp
     }   
     
     public function UpdateCampOnUserId(){
+
+        //echo 'Update Camp';
         global $wpdb;
         $Ok = true;
 
@@ -295,6 +299,10 @@ class DreamCityCamp
 
         );
 
+        //UPDATE USER TRANSIENT
+        delete_new_user_approve_transient();
+        get_user_statuses();
+
         if( $result == false){
             
             $Ok = false;
@@ -306,14 +314,14 @@ class DreamCityCamp
     }
 
     private function StoreCamp(){
-        
+        //echo 'new camp'; 
         global $wpdb;
         $Ok = true;
         $table_name = $wpdb->prefix . 'dc_camp';
-        //$wpdb->show_errors();
-
-        // echo '<pre>' . $this->user_id .'<br/>'. $this->camp_name .'<br/>'. $this->user_phone .'<br/>desc:'. $this->camp_description .'<br/>'. $this->camp_participants .'<br/>'. $this->camp_construction .'<br/>ico'. $this->camp_iconURL .'<br/>img'. $this->camp_imageURL . '</pre>';
         
+        //echo $table_name;
+        //echo '<pre>id: ' . $this->user_id .'<br/>campe name: '. $this->camp_name .'<br/>phone: '. $this->user_phone .'<br/>desc:'. $this->camp_description .'<br/>short desc: ' . $this->camp_short_desc . '<br/>Part: '. $this->camp_participants .'<br/>Construction: '. $this->camp_construction .'<br/>ico'. $this->camp_iconURL .'<br/>img'. $this->camp_imageURL . '</pre>';
+        //echo $table_name;
         $wpdb->insert( 
                 $table_name, 
                 array(
@@ -329,18 +337,15 @@ class DreamCityCamp
                     'camp_registration_date'     => current_time( 'mysql' )
                 ) 
             );      
-            
-        // if( !$Ok ){          
-  //           var_dump($Ok);   
-        //  $wpdb->print_error(); 
-        //  echo(" OHH SHIT! userid= ". $this->user_id);
-        //  return false;
-        // }    
+
+            /*$wpdb->show_errors();
+            $wpdb->print_error(); 
+            echo $wpdb->last_query;*/
+
 
         $this->camp_id = $wpdb->insert_id;
-        //echo $this->camp_id;
-        // Insert workshop dates
-        // if( $this->camp_id > 0 ){
+
+        
             $table_name = $wpdb->prefix . 'dc_camp_meta';       
             if( $this->camp_workshop1 != "" ){
                 $wpdb->insert( 
@@ -382,11 +387,7 @@ class DreamCityCamp
                     ) 
                 );      
             }
-        // }
-        // else{
-        // //   // failed to store insert camp data.
-        //      $Ok = false;
-        // }
+
         
         return $Ok;
         
@@ -416,16 +417,13 @@ class DreamCityCamp
         
             if ( is_wp_error( $new_user_id ) ) {
                 $error_string = $new_user_id->get_error_message();
-                //echo '<div id="message" class="error"><p>' . $error_string . '</p></div>';
-                //wp_redirect('http://dream-city.dk/test-side' . '?state=error', 200); exit;
+
                 wp_redirect('http://dream-city.dk/become-a-dreamer/registration' . '?state=error', 200); exit;
                 //wp_redirect('http://localhost/wordpress/become-a-dreamer/registration' . '?state=error', 200); exit;
-                //echo "Failed to create user : ". $new_user_id;
                 $Ok = false;
             }else{          
                 //echo( "User created : ". $this->user_id );
                 $this->user_id = $new_user_id;
-                //echo '<div id="message" class="error"><p>' . $this->user_id . '</p></div>';
                 $this->AddCampImageData();
                 $Ok = $this->StoreCamp();
             }

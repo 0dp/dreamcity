@@ -167,8 +167,7 @@ function dc_registration_form_fields() {
 				<p>
 					<div class="form-group">
 						<label for="dc_user_short_desc" data-validate="length">
-							<?php _e('Short project description/teaser for website in English (will be used for press, website etc., in case you change your project to some degree please
-send an updated description to dreamcity@roskilde-festival.dk) '); ?>
+							<?php _e('Short project description/teaser for website in English (will be used for press, website etc., in case you change your project to some degree please send an updated description to dreamcity@roskilde-festival.dk) '); ?>
 						</label>
 						<div class="input-group" data-validate="length" data-length="10">
 							<textarea rows="3" name="dc_user_short_desc" id="dc_user_short_desc" class="form-control required" placeholder="Short camp description" type="text" required></textarea>
@@ -335,7 +334,7 @@ function dc_process_reg_form(){
 					$dc_form_success = "error";	
 					$Ok = false;
 				}else{
-					dc_camp_update_notes($camp->camp_id, date("Y-m-d H:i:s") . " - Camp reaplied", true);
+					dc_camp_update_notes($camp->camp_id, date("Y-m-d H:i:s") . " - Camp reapplied", true);
 					update_user_meta( $camp->user_id, 'pw_user_status', 'pending' );
 				}
         	}
@@ -355,10 +354,23 @@ function dc_process_reg_form(){
 				$to = $camp->user_email;
 				$message = sprintf( "Hey %s. \r\nWe have received your registration. Once we have reviewed it we will get back to you. \r\r\n\n Dream On", $camp->camp_name, ENT_QUOTES );
 				$subject = "Welcome to Dream City";
-				$att = create_pdf($campdata);
+				
+				// $att = create_pdf($camp);
+			
+				// //$att = chunk_split(base64_encode($pdfdoc));
 
-				wp_mail( $to, $subject, $message, '', $att );
-				//wp_mail( $to, $subject, $message, '' );
+				// $separador = md5(time());
+				// $headers  = "From: no-reply@dream-city.dk\r\n";
+				// $headers .= "MIME-Version: 1.0"."\r\n";
+				// $headers .= "Content-Type: multipart/mixed; boundary=\"".$separador."\"";
+				// $headers .= "Content-Transfer-Encoding: 8bit"."\r\n";
+				// $headers .= "This is a MIME encoded message."."\r\n";
+				// $headers .= "Content-Type: application/octet-stream name=\""."application.pdf"."\"";
+				// $headers .= "Content-Transfer-Encoding: base64";
+				// $headers .= "Content-Disposition: attachment; filename=\""."application.pdf"."\"";
+	
+				//include $att
+				wp_mail( $to, $subject, $message, '' );
 				
 				//$Ok = true;
 				
@@ -366,7 +378,6 @@ function dc_process_reg_form(){
 
 				//return $dc_registration_form_fields;
 				
-				//wp_redirect('http://dream-city.dk/test-side' . '?state=success', 200); exit;
 				wp_redirect('http://dream-city.dk/become-a-dreamer/registration' . '?state=success', 200); exit;
 				//wp_redirect('http://localhost/wordpress/become-a-dreamer/registration' . '?state=success', 200); exit;
 			}
