@@ -3,7 +3,7 @@ Contributors: Johankat Lars Rasmus
 Donate link: http://dream-city.dk/
 Tags: user module, application management
 Requires at least: 4.4.2
-Tested up to: 4.4.2
+Tested up to: 4.5.0
 Stable tag: 1.0.17
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
