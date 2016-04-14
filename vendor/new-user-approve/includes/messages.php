@@ -6,10 +6,10 @@
  * @return string
  */
 function nua_default_approve_user_message() {
-	$message = __( 'You have been approved to access {sitename}', 'new-user-approve' ) . "\r\n\r\n";
-	$message .= "{username}\r\n";
-	$message .= "{password}\r\n\r\n";
-	$message .= "{login_url}\r\n\r\n";
+	$message = __( 'You have been approved to access {sitename}', 'new-user-approve' ) . "</br></br>";
+	$message .= "{username}\</br>";
+	$message .= "{password}\</br></br>";
+	$message .= "{login_url}</br></br>";
 	$message .= '<strong>Please read the following mail thoroughly to get all information correct</strong>
 <br></br>
 <p>Horray,</p>

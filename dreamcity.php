@@ -4,7 +4,7 @@ Plugin Name: Dreamcity Medlems Plugin
 Plugin URI:  https://github.com/0dp/dreamcity
 Description: Medlemsmodul med ansøgning blah blah
 Author: 	 Johankat, Lars, Rasmus
-Version: 	 1.0.15
+Version: 	 1.0.17
 Author URI:  https://github.com/0dp/
 License:     GPL-3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -12,6 +12,8 @@ GitHub Plugin URI: https://github.com/0dp/dreamcity
 GitHub Branch:     master
 */
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+define( 'WPFP_PATH', plugin_dir_path( __FILE__ ) ); 
 //Includes
 include( plugin_dir_path( __FILE__ ) . 'signup/signup.php');
 include( plugin_dir_path( __FILE__ ) . 'vendor/new-user-approve/new-user-approve.php');

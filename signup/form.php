@@ -355,13 +355,9 @@ function dc_process_reg_form(){
 				$message = sprintf( "Hey %s. \r\nWe have received your registration. Once we have reviewed it we will get back to you. \r\r\n\n Dream On", $camp->camp_name, ENT_QUOTES );
 				$subject = "Welcome to Dream City";
 				
-
 				// $att = create_pdf($camp);
 			
 				// //$att = chunk_split(base64_encode($pdfdoc));
-
-				//$att = create_pdf($camp);
-
 
 				// $separador = md5(time());
 				// $headers  = "From: no-reply@dream-city.dk\r\n";

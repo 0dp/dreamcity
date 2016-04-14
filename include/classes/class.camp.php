@@ -19,7 +19,7 @@ Change Log
                     Made 2 static functions to construct class. "withUserId" and "withDetails"
                     Added "CampNotes" to "fill" function.
                     Pushed into branch "new-camp-class"
-                    
+
   2016-04-10 JHK;   Update transients on Updatecamp
 
 Review
@@ -31,6 +31,8 @@ Review
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 // Todo LSA; Move SQL come to other function place!
+
+    //include( WPFP_PATH . 'vendor/new-user-approve/new-user-approve.php' );
 
 class DreamCityCamp
 {   
@@ -75,6 +77,10 @@ class DreamCityCamp
     
     public $success = array();
     public $error_array = array();
+    
+
+
+
     
 
     // Use static functions "withUserId" or 
@@ -300,8 +306,10 @@ class DreamCityCamp
         );
 
         //UPDATE USER TRANSIENT
-        delete_new_user_approve_transient();
-        get_user_statuses();
+        // $pnua = new pw_new_user_approve();
+
+        // $pnua->delete_new_user_approve_transient();
+        // $pnua->get_user_statuses();
 
         if( $result == false){
             

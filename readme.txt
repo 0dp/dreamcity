@@ -4,11 +4,7 @@ Donate link: http://dream-city.dk/
 Tags: user module, application management
 Requires at least: 4.4.2
 Tested up to: 4.4.2
-<<<<<<< HEAD
-Stable tag: 1.0.15
-=======
-Stable tag: 1.0.14
->>>>>>> 7b65b1561450c68295285d7f9db399bf4964f2d7
+Stable tag: 1.0.17
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
