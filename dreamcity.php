@@ -4,7 +4,7 @@ Plugin Name: Dreamcity Medlems Plugin
 Plugin URI:  https://github.com/0dp/dreamcity
 Description: Medlemsmodul med ansøgning blah blah
 Author: 	 Johankat, Lars, Rasmus
-Version: 	 1.0.18
+Version: 	 1.0.19
 Author URI:  https://github.com/0dp/
 License:     GPL-3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -360,5 +360,50 @@ if(isset($_GET["page"]) && $_GET['page'] == "dreamcity/admin/admin-dashboard.php
         die();
     }
 
+}
+
+//CREATE NEW POST TYPE CAMPS
+
+add_action( 'init', 'post_type_camps' );
+/**
+ * Register a book post type.
+ *
+ * @link http://codex.wordpress.org/Function_Reference/register_post_type
+ */
+function post_type_camps() {
+    $labels = array(
+        'name'               => _x( 'Camps', 'post type general name', 'dreamcity' ),
+        'singular_name'      => _x( 'camp', 'post type singular name', 'dreamcity' ),
+        'menu_name'          => _x( 'Camps', 'admin menu', 'dreamcity' ),
+        'name_admin_bar'     => _x( 'Camp', 'add new on admin bar', 'dreamcity' ),
+        'add_new'            => _x( 'Add New', 'camp', 'dreamcity' ),
+        'add_new_item'       => __( 'Add New Camp', 'dreamcity' ),
+        'new_item'           => __( 'New Camp', 'dreamcity' ),
+        'edit_item'          => __( 'Edit Camp', 'dreamcity' ),
+        'view_item'          => __( 'View Camp', 'dreamcity' ),
+        'all_items'          => __( 'All Camps', 'dreamcity' ),
+        'search_items'       => __( 'Search Camps', 'dreamcity' ),
+        'parent_item_colon'  => __( 'Parent Camp:', 'dreamcity' ),
+        'not_found'          => __( 'No camp found.', 'dreamcity' ),
+        'not_found_in_trash' => __( 'No camps found in Trash.', 'dreamcity' )
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'description'        => __( 'Description.', 'dreamcity' ),
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => 'camp' ),
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => null,
+        'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' )
+    );
+
+    register_post_type( 'book', $args );
 }
 ?>
