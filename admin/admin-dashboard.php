@@ -90,6 +90,7 @@ LEFT JOIN wp0_usermeta ON wp0_usermeta.user_id = wp0_users.ID WHERE wp0_usermeta
                 <th>Email</th>
                 <th>Phone</th>
                 <th>#Residents</th>
+                <th>Short Description</th>
                 <th>Project Description</th>
                 <th>Project Construction</th>
                 <th>Workshop</th>
@@ -104,6 +105,7 @@ LEFT JOIN wp0_usermeta ON wp0_usermeta.user_id = wp0_users.ID WHERE wp0_usermeta
                 <td><?php echo $row->user_email; ?></td>
                 <td><?php echo $row->camp_phone; ?></td>
                 <td><?php echo $row->camp_residents; ?></td>
+                <td><?php echo $row->camp_short_description; ?></td>
                 <td><?php echo $row->camp_description; ?></td>
                 <td><?php echo $row->camp_construction; ?></td>
                 <td><?php echo $row->meta_value; ?></td>
